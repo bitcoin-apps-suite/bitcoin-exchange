@@ -367,7 +367,7 @@ export default function BitcoinExchange() {
                   
                   {/* Asks */}
                   <div className="space-y-1">
-                    {orderBook.asks.reverse().map((order) => (
+                    {[...orderBook.asks].reverse().map((order) => (
                       <div key={order.id} className="grid grid-cols-3 text-xs">
                         <div className="text-red-500">{order.price.toFixed(5)}</div>
                         <div className="text-right text-gray-400">{order.amount}</div>
