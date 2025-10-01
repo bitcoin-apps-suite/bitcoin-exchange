@@ -1,427 +1,291 @@
 'use client'
 
-import { BitcoinOSProvider } from '@bitcoin-os/bridge'
+// import { BitcoinOSProvider } from '@bitcoin-os/bridge'
 import { useState, useEffect } from 'react'
-import { 
-  TrendingUp, 
-  TrendingDown, 
-  Search, 
-  RefreshCw, 
-  DollarSign,
-  Activity,
-  BarChart3,
-  ArrowUpRight,
-  ArrowDownRight,
-  Clock,
-  Filter
-} from 'lucide-react'
+import CleanTaskbar from '../components/Taskbar'
+import DevSidebar from '../components/DevSidebar'
+import Dock from '../components/Dock'
+import ProofOfConceptBanner from '../components/ProofOfConceptBanner'
+import TradingInterface from '../components/TradingInterface'
 
-interface NFTListing {
+interface Token {
   id: string
+  symbol: string
   name: string
-  container: string
-  shares: number
+  type: 'app' | 'compute' | 'ai' | 'storage'
   price: number
-  dividendYield: number
-  volume24h: number
   change24h: number
-  locked: boolean
-}
-
-interface Order {
-  id: string
-  type: 'buy' | 'sell'
-  price: number
-  amount: number
-  total: number
-}
-
-interface Trade {
-  id: string
-  time: Date
-  price: number
-  amount: number
-  type: 'buy' | 'sell'
+  volume24h: number
+  marketCap: string
+  available?: number
+  unit?: string
+  description: string
 }
 
 export default function BitcoinExchange() {
-  const [activeTab, setActiveTab] = useState<'spot' | 'nfts' | 'shares'>('nfts')
-  const [selectedAsset, setSelectedAsset] = useState<NFTListing | null>(null)
-  const [orderType, setOrderType] = useState<'buy' | 'sell'>('buy')
-  const [searchQuery, setSearchQuery] = useState('')
-  const [priceFilter, setPriceFilter] = useState<'all' | 'under100' | 'under1000' | 'over1000'>('all')
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [currentUser, setCurrentUser] = useState<any>(null)
+  const [showDevSidebar, setShowDevSidebar] = useState(false)
+  const [selectedToken, setSelectedToken] = useState<Token | null>(null)
+  const [openWindows, setOpenWindows] = useState<string[]>(['Exchange'])
+  const [activeWindow, setActiveWindow] = useState<string | null>('Exchange')
 
-  const config = {
-    context: {
-      appName: 'Bitcoin Exchange',
-      exchangeUrl: 'https://bitcoin-exchange.vercel.app',
-      branding: {
-        name: 'Bitcoin Exchange',
-        color: '#ffa500'
-      }
-    },
-    showDevSidebar: false,
-    showDock: true,
-    showPocBar: true
+  // const config = {
+  //   context: {
+  //     appName: 'Bitcoin Exchange',
+  //     exchangeUrl: 'https://bitcoin-exchange.vercel.app',
+  //     branding: {
+  //       name: 'Bitcoin Exchange',
+  //       color: '#ffa500'
+  //     }
+  //   },
+  //   showDevSidebar: false,
+  //   showDock: true,
+  //   showPocBar: true
+  // }
+
+  const handleLogin = () => {
+    // Mock authentication - in real app this would connect to HandCash/wallet
+    setIsAuthenticated(true)
+    setCurrentUser({ name: 'Demo User', address: 'bc1q...' })
   }
 
-  // Mock data for NFT/FT listings
-  const [nftListings] = useState<NFTListing[]>([
-    {
-      id: '1',
-      name: 'BitcoinWhitepaper.pdf',
-      container: 'docs.nft',
-      shares: 1000000,
-      price: 0.00012,
-      dividendYield: 8.5,
-      volume24h: 45230,
-      change24h: 12.5,
-      locked: false
-    },
-    {
-      id: '2',
-      name: 'SatoshiEmails.zip',
-      container: 'archive.nft',
-      shares: 500000,
-      price: 0.00089,
-      dividendYield: 12.3,
-      volume24h: 123400,
-      change24h: -3.2,
-      locked: false
-    },
-    {
-      id: '3',
-      name: 'BlockchainCourse.mp4',
-      container: 'education.nft',
-      shares: 2000000,
-      price: 0.00034,
-      dividendYield: 6.7,
-      volume24h: 78900,
-      change24h: 5.8,
-      locked: true
-    },
-    {
-      id: '4',
-      name: 'Genesis.block',
-      container: 'history.nft',
-      shares: 100000,
-      price: 0.00999,
-      dividendYield: 15.2,
-      volume24h: 234500,
-      change24h: 22.1,
-      locked: false
-    }
-  ])
+  const handleLogout = () => {
+    setIsAuthenticated(false)
+    setCurrentUser(null)
+  }
 
-  // Mock order book data
-  const [orderBook] = useState<{ bids: Order[], asks: Order[] }>({
-    bids: [
-      { id: '1', type: 'buy', price: 0.00088, amount: 1200, total: 1.056 },
-      { id: '2', type: 'buy', price: 0.00087, amount: 2500, total: 2.175 },
-      { id: '3', type: 'buy', price: 0.00086, amount: 3300, total: 2.838 },
-    ],
-    asks: [
-      { id: '4', type: 'sell', price: 0.00090, amount: 1500, total: 1.35 },
-      { id: '5', type: 'sell', price: 0.00091, amount: 2200, total: 2.002 },
-      { id: '6', type: 'sell', price: 0.00092, amount: 2800, total: 2.576 },
-    ]
-  })
+  const handleNewOrder = () => {
+    console.log('New order clicked')
+  }
 
-  // Mock recent trades
-  const [recentTrades] = useState<Trade[]>([
-    { id: '1', time: new Date(), price: 0.00089, amount: 500, type: 'buy' },
-    { id: '2', time: new Date(), price: 0.00088, amount: 750, type: 'sell' },
-    { id: '3', time: new Date(), price: 0.00089, amount: 1200, type: 'buy' },
-  ])
+  const handleOpenWallet = () => {
+    console.log('Open wallet clicked')
+  }
 
-  const filteredListings = nftListings.filter(listing => {
-    const matchesSearch = listing.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         listing.container.toLowerCase().includes(searchQuery.toLowerCase())
-    
-    let matchesPrice = true
-    if (priceFilter === 'under100') matchesPrice = listing.price < 0.001
-    else if (priceFilter === 'under1000') matchesPrice = listing.price < 0.01
-    else if (priceFilter === 'over1000') matchesPrice = listing.price >= 0.01
+  const handleToggleDevSidebar = () => {
+    setShowDevSidebar(!showDevSidebar)
+  }
 
-    return matchesSearch && matchesPrice
-  })
-
-  useEffect(() => {
-    if (filteredListings.length > 0 && !selectedAsset) {
-      setSelectedAsset(filteredListings[0])
-    }
-  }, [filteredListings, selectedAsset])
+  const handleTokenSelect = (token: Token) => {
+    setSelectedToken(token)
+  }
 
   return (
-    <BitcoinOSProvider config={config}>
-      <div className="min-h-screen bg-black text-white">
-        {/* Header */}
-        <div className="border-b border-gray-800 bg-gray-950">
-          <div className="max-w-7xl mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-8">
-                <h1 className="text-2xl font-light">
-                  Bitcoin <span className="text-[#ffa500]">Exchange</span>
-                </h1>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setActiveTab('spot')}
-                    className={`px-4 py-2 rounded ${activeTab === 'spot' ? 'bg-[#ffa500]/20 text-[#ffa500]' : 'text-gray-400 hover:text-white'}`}
-                  >
-                    Spot Trading
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('nfts')}
-                    className={`px-4 py-2 rounded ${activeTab === 'nfts' ? 'bg-[#ffa500]/20 text-[#ffa500]' : 'text-gray-400 hover:text-white'}`}
-                  >
-                    NFT/FT Market
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('shares')}
-                    className={`px-4 py-2 rounded ${activeTab === 'shares' ? 'bg-[#ffa500]/20 text-[#ffa500]' : 'text-gray-400 hover:text-white'}`}
-                  >
-                    Token Shares
-                  </button>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2 text-sm">
-                  <Activity className="w-4 h-4 text-green-500" />
-                  <span className="text-gray-400">BSV/USD:</span>
-                  <span className="text-green-500">$51.23</span>
-                </div>
-                <button className="px-4 py-2 bg-[#ffa500] text-black rounded font-medium hover:bg-[#ffb833]">
-                  Connect Wallet
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="min-h-screen bg-black text-white flex flex-col">
+        {/* Proof of Concept Banner */}
+        <ProofOfConceptBanner />
+        
+        {/* Taskbar */}
+        <CleanTaskbar 
+          isAuthenticated={isAuthenticated}
+          currentUser={currentUser}
+          onLogout={handleLogout}
+          onNewOrder={handleNewOrder}
+          onOpenWallet={handleOpenWallet}
+          onToggleDevSidebar={handleToggleDevSidebar}
+        />
 
-        {/* Main Content */}
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="grid grid-cols-12 gap-6">
-            {/* Asset List */}
-            <div className="col-span-4 bg-gray-950 border border-gray-800 rounded-lg p-4">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-light">NFT/FT Assets</h2>
-                <RefreshCw className="w-4 h-4 text-gray-400 cursor-pointer hover:text-white" />
-              </div>
-              
-              {/* Search and Filter */}
-              <div className="mb-4 space-y-2">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    type="text"
-                    placeholder="Search assets..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 bg-gray-900 border border-gray-800 rounded focus:border-[#ffa500] outline-none"
-                  />
-                </div>
-                <div className="flex gap-2">
-                  <select
-                    value={priceFilter}
-                    onChange={(e) => setPriceFilter(e.target.value as any)}
-                    className="flex-1 px-3 py-2 bg-gray-900 border border-gray-800 rounded text-sm"
-                  >
-                    <option value="all">All Prices</option>
-                    <option value="under100">Under 100 sats</option>
-                    <option value="under1000">Under 1000 sats</option>
-                    <option value="over1000">Over 1000 sats</option>
-                  </select>
-                </div>
-              </div>
+        {/* Main Content Container */}
+        <div className="flex flex-1 relative">
+          {/* Dev Sidebar */}
+          <DevSidebar 
+            isVisible={showDevSidebar}
+            onClose={() => setShowDevSidebar(false)}
+          />
 
-              {/* Asset List */}
-              <div className="space-y-2 max-h-[600px] overflow-y-auto">
-                {filteredListings.map((listing) => (
-                  <div
-                    key={listing.id}
-                    onClick={() => setSelectedAsset(listing)}
-                    className={`p-3 border rounded-lg cursor-pointer transition-all ${
-                      selectedAsset?.id === listing.id 
-                        ? 'bg-[#ffa500]/10 border-[#ffa500]' 
-                        : 'bg-gray-900 border-gray-800 hover:border-gray-700'
-                    }`}
-                  >
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <div className="font-medium">{listing.name}</div>
-                        <div className="text-xs text-gray-500">{listing.container}</div>
-                        <div className="text-xs text-gray-400 mt-1">
-                          {listing.shares.toLocaleString()} shares
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-sm font-medium">{listing.price.toFixed(5)} BSV</div>
-                        <div className={`text-xs flex items-center justify-end gap-1 ${
-                          listing.change24h >= 0 ? 'text-green-500' : 'text-red-500'
-                        }`}>
-                          {listing.change24h >= 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
-                          {Math.abs(listing.change24h)}%
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Trading Panel */}
-            <div className="col-span-5 space-y-6">
-              {/* Chart Area */}
-              <div className="bg-gray-950 border border-gray-800 rounded-lg p-4 h-[300px]">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-light">
-                    {selectedAsset ? selectedAsset.name : 'Select an asset'}
-                  </h3>
-                  <div className="flex gap-2">
-                    <button className="px-2 py-1 text-xs bg-gray-900 border border-gray-800 rounded hover:border-gray-700">1H</button>
-                    <button className="px-2 py-1 text-xs bg-[#ffa500]/20 border border-[#ffa500] rounded text-[#ffa500]">24H</button>
-                    <button className="px-2 py-1 text-xs bg-gray-900 border border-gray-800 rounded hover:border-gray-700">7D</button>
-                    <button className="px-2 py-1 text-xs bg-gray-900 border border-gray-800 rounded hover:border-gray-700">1M</button>
-                  </div>
-                </div>
-                <div className="flex items-center justify-center h-[200px] text-gray-500">
-                  <BarChart3 className="w-12 h-12 opacity-20" />
-                </div>
-              </div>
-
-              {/* Order Form */}
-              <div className="bg-gray-950 border border-gray-800 rounded-lg p-4">
-                <div className="flex gap-2 mb-4">
-                  <button
-                    onClick={() => setOrderType('buy')}
-                    className={`flex-1 py-2 rounded font-medium ${
-                      orderType === 'buy' 
-                        ? 'bg-green-500/20 text-green-500 border border-green-500' 
-                        : 'bg-gray-900 text-gray-400 border border-gray-800'
-                    }`}
-                  >
-                    Buy
-                  </button>
-                  <button
-                    onClick={() => setOrderType('sell')}
-                    className={`flex-1 py-2 rounded font-medium ${
-                      orderType === 'sell' 
-                        ? 'bg-red-500/20 text-red-500 border border-red-500' 
-                        : 'bg-gray-900 text-gray-400 border border-gray-800'
-                    }`}
-                  >
-                    Sell
-                  </button>
-                </div>
-
-                <div className="space-y-3">
-                  <div>
-                    <label className="text-xs text-gray-400 mb-1 block">Price (BSV)</label>
-                    <input
-                      type="number"
-                      step="0.00001"
-                      placeholder="0.00000"
-                      className="w-full px-3 py-2 bg-gray-900 border border-gray-800 rounded focus:border-[#ffa500] outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs text-gray-400 mb-1 block">Amount (Shares)</label>
-                    <input
-                      type="number"
-                      placeholder="0"
-                      className="w-full px-3 py-2 bg-gray-900 border border-gray-800 rounded focus:border-[#ffa500] outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs text-gray-400 mb-1 block">Total (BSV)</label>
-                    <input
-                      type="number"
-                      step="0.00001"
-                      placeholder="0.00000"
-                      disabled
-                      className="w-full px-3 py-2 bg-gray-900 border border-gray-800 rounded opacity-50"
-                    />
-                  </div>
-                  <button className={`w-full py-3 rounded font-medium ${
-                    orderType === 'buy' 
-                      ? 'bg-green-500 text-black hover:bg-green-400' 
-                      : 'bg-red-500 text-white hover:bg-red-400'
-                  }`}>
-                    {orderType === 'buy' ? 'Buy' : 'Sell'} {selectedAsset?.name || 'Asset'}
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Order Book & Trades */}
-            <div className="col-span-3 space-y-6">
-              {/* Order Book */}
-              <div className="bg-gray-950 border border-gray-800 rounded-lg p-4">
-                <h3 className="text-sm font-light mb-3">Order Book</h3>
-                <div className="space-y-2">
-                  <div className="grid grid-cols-3 text-xs text-gray-400 pb-2 border-b border-gray-800">
-                    <div>Price</div>
-                    <div className="text-right">Amount</div>
-                    <div className="text-right">Total</div>
-                  </div>
+          {/* Main Content */}
+          <main className={`flex-1 transition-all duration-300 ${showDevSidebar ? 'ml-80' : 'ml-0'}`}>
+            {/* Hero Section */}
+            <div className="bg-gradient-to-r from-purple-900/20 via-orange-900/20 to-blue-900/20 border-b border-gray-800">
+              <div className="max-w-7xl mx-auto px-6 py-8">
+                <div className="text-center">
+                  <h1 className="text-4xl font-light mb-4">
+                    Bitcoin <span className="text-[#ffa500]">Exchange</span>
+                  </h1>
+                  <p className="text-xl text-gray-300 mb-2">
+                    The CPU of the World's Economy
+                  </p>
+                  <p className="text-gray-400 max-w-2xl mx-auto">
+                    Trade Bitcoin App tokens and computational resources. Powered by BSV Teranode - 
+                    supporting billions to trillions of transactions per second.
+                  </p>
                   
-                  {/* Asks */}
-                  <div className="space-y-1">
-                    {[...orderBook.asks].reverse().map((order) => (
-                      <div key={order.id} className="grid grid-cols-3 text-xs">
-                        <div className="text-red-500">{order.price.toFixed(5)}</div>
-                        <div className="text-right text-gray-400">{order.amount}</div>
-                        <div className="text-right text-gray-400">{order.total.toFixed(3)}</div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Current Price */}
-                  <div className="py-2 border-y border-gray-800">
-                    <div className="text-center text-lg font-medium text-[#ffa500]">
-                      {selectedAsset?.price.toFixed(5) || '0.00000'} BSV
+                  {/* Stats Bar */}
+                  <div className="flex justify-center items-center space-x-8 mt-6 text-sm">
+                    <div className="text-center">
+                      <div className="text-[#ffa500] font-mono text-lg">2.4M</div>
+                      <div className="text-gray-400">24h Volume (BSV)</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-green-500 font-mono text-lg">847</div>
+                      <div className="text-gray-400">Active Pairs</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-blue-500 font-mono text-lg">1.2M</div>
+                      <div className="text-gray-400">TX/second</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-purple-500 font-mono text-lg">$51.23</div>
+                      <div className="text-gray-400">BSV Price</div>
                     </div>
                   </div>
 
-                  {/* Bids */}
-                  <div className="space-y-1">
-                    {orderBook.bids.map((order) => (
-                      <div key={order.id} className="grid grid-cols-3 text-xs">
-                        <div className="text-green-500">{order.price.toFixed(5)}</div>
-                        <div className="text-right text-gray-400">{order.amount}</div>
-                        <div className="text-right text-gray-400">{order.total.toFixed(3)}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Recent Trades */}
-              <div className="bg-gray-950 border border-gray-800 rounded-lg p-4">
-                <h3 className="text-sm font-light mb-3">Recent Trades</h3>
-                <div className="space-y-1">
-                  <div className="grid grid-cols-3 text-xs text-gray-400 pb-2 border-b border-gray-800">
-                    <div>Time</div>
-                    <div className="text-right">Price</div>
-                    <div className="text-right">Amount</div>
-                  </div>
-                  {recentTrades.map((trade) => (
-                    <div key={trade.id} className="grid grid-cols-3 text-xs">
-                      <div className="text-gray-500">
-                        {trade.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                      </div>
-                      <div className={`text-right ${trade.type === 'buy' ? 'text-green-500' : 'text-red-500'}`}>
-                        {trade.price.toFixed(5)}
-                      </div>
-                      <div className="text-right text-gray-400">{trade.amount}</div>
+                  {/* Quick Connect */}
+                  {!isAuthenticated && (
+                    <div className="mt-6">
+                      <button 
+                        onClick={handleLogin}
+                        className="px-8 py-3 bg-[#ffa500] text-black rounded-lg font-medium hover:bg-[#ffb833] transition-colors"
+                      >
+                        Connect Wallet to Start Trading
+                      </button>
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
             </div>
-          </div>
+
+            {/* Trading Interface */}
+            <div className="max-w-7xl mx-auto px-6 py-8">
+              <TradingInterface onSelectToken={handleTokenSelect} />
+            </div>
+
+            {/* Market Categories */}
+            <div className="max-w-7xl mx-auto px-6 py-8">
+              <h2 className="text-2xl font-light mb-6 text-center">Market Categories</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Bitcoin Apps */}
+                <div className="bg-gray-950 border border-gray-800 rounded-lg p-6">
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                      <span className="text-blue-500 text-2xl">₿</span>
+                    </div>
+                    <h3 className="text-xl font-medium mb-2">Bitcoin Apps</h3>
+                    <p className="text-gray-400 text-sm mb-4">
+                      Trade tokens from the Bitcoin Apps ecosystem - Writer, Video, Art, Music, Education, Jobs and more.
+                    </p>
+                    <div className="text-2xl font-mono text-blue-500">7 Tokens</div>
+                    <div className="text-sm text-gray-400">$12.4M Market Cap</div>
+                  </div>
+                </div>
+
+                {/* Computational Resources */}
+                <div className="bg-gray-950 border border-gray-800 rounded-lg p-6">
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                      <span className="text-green-500 text-2xl">⚡</span>
+                    </div>
+                    <h3 className="text-xl font-medium mb-2">Compute Resources</h3>
+                    <p className="text-gray-400 text-sm mb-4">
+                      Access GPU, CPU, and storage resources on-demand. Pay per use with instant settlement.
+                    </p>
+                    <div className="text-2xl font-mono text-green-500">4 Resources</div>
+                    <div className="text-sm text-gray-400">$6.8M Total Value</div>
+                  </div>
+                </div>
+
+                {/* AI Services */}
+                <div className="bg-gray-950 border border-gray-800 rounded-lg p-6">
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                      <span className="text-purple-500 text-2xl">🤖</span>
+                    </div>
+                    <h3 className="text-xl font-medium mb-2">AI Services</h3>
+                    <p className="text-gray-400 text-sm mb-4">
+                      AI inference, training, and specialized services. Power the next generation of applications.
+                    </p>
+                    <div className="text-2xl font-mono text-purple-500">3 Services</div>
+                    <div className="text-sm text-gray-400">$14.4M Capacity</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Composite Services Preview */}
+            <div className="bg-gradient-to-r from-gray-900/50 to-gray-800/50 border-t border-gray-800">
+              <div className="max-w-7xl mx-auto px-6 py-12">
+                <div className="text-center mb-8">
+                  <h2 className="text-3xl font-light mb-4">
+                    Composite <span className="text-[#ffa500]">Creation</span>
+                  </h2>
+                  <p className="text-gray-400 max-w-3xl mx-auto">
+                    Combine app tokens with computational resources for complex workflows. 
+                    Create a Hollywood movie by buying $bVideo + $bArt + $B_GPU_H100 + $B_AI_RENDER - then sell tickets!
+                  </p>
+                </div>
+
+                <div className="bg-gray-950/50 border border-gray-700 rounded-lg p-6">
+                  <div className="text-center text-gray-400">
+                    <div className="text-4xl mb-4">🎬</div>
+                    <h3 className="text-xl font-medium mb-2 text-white">Personal Hollywood Movie Example</h3>
+                    <div className="flex justify-center items-center space-x-4 text-sm">
+                      <span className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded">$bVideo</span>
+                      <span>+</span>
+                      <span className="px-3 py-1 bg-orange-500/20 text-orange-400 rounded">$bArt</span>
+                      <span>+</span>
+                      <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded">$B_GPU_H100</span>
+                      <span>+</span>
+                      <span className="px-3 py-1 bg-purple-500/20 text-purple-400 rounded">$B_AI_RENDER</span>
+                      <span>=</span>
+                      <span className="px-3 py-1 bg-[#ffa500]/20 text-[#ffa500] rounded">Your Movie NFT</span>
+                    </div>
+                    <p className="mt-4 text-sm">
+                      Coming soon: One-click composite purchases for complex digital creations
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
         </div>
+
+        {/* Footer */}
+        <footer className="border-t border-gray-800 bg-gray-950">
+          <div className="max-w-7xl mx-auto px-6 py-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              <div>
+                <h4 className="font-medium mb-4">Bitcoin Exchange</h4>
+                <p className="text-sm text-gray-400">
+                  The decentralized exchange for Bitcoin Apps and computational resources.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-medium mb-4">Markets</h4>
+                <ul className="space-y-2 text-sm text-gray-400">
+                  <li>Bitcoin Apps Tokens</li>
+                  <li>Computational Resources</li>
+                  <li>AI Services</li>
+                  <li>Storage Solutions</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium mb-4">Developers</h4>
+                <ul className="space-y-2 text-sm text-gray-400">
+                  <li>API Documentation</li>
+                  <li>Exchange SDK</li>
+                  <li>Trading Bots</li>
+                  <li>Market Data</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium mb-4">Powered By</h4>
+                <ul className="space-y-2 text-sm text-gray-400">
+                  <li>BSV Blockchain</li>
+                  <li>Teranode Technology</li>
+                  <li>Bitcoin OS</li>
+                  <li>Open BSV License</li>
+                </ul>
+              </div>
+            </div>
+            <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+              <p>© 2025 Bitcoin Exchange. Part of the Bitcoin Apps ecosystem.</p>
+            </div>
+          </div>
+        </footer>
+        
+        {/* Dock */}
+        <Dock />
       </div>
-    </BitcoinOSProvider>
   )
 }
