@@ -1,0 +1,197 @@
+/* TaskBar - macOS-style grey menu bar */
+.taskbar {
+  position: fixed;
+  top: 40px; /* Below PoC bar */
+  left: 0;
+  right: 0;
+  height: 32px;
+  background: linear-gradient(180deg, #3a3a3a 0%, #2a2a2a 100%);
+  border-bottom: 1px solid #1a1a1a;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: #ffffff;
+  user-select: none;
+  z-index: 999997;
+}
+
+/* bApps Menu Button - Multicolored B */
+.bapps-menu-btn {
+  padding: 0 16px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  display: flex;
+  align-items: center;
+}
+
+.bapps-menu-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.bitcoin-logo {
+  font-size: 18px;
+  font-weight: bold;
+  background: linear-gradient(
+    135deg,
+    #ff6b6b,
+    #f97316,
+    #feca57,
+    #48dbfb,
+    #0abde3,
+    #a55eea,
+    #fd79a8
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+}
+
+/* bApps Dropdown */
+.bapps-menu-dropdown {
+  position: absolute;
+  top: 32px;
+  left: 0;
+  min-width: 280px;
+  background: #1a1a1a;
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+  padding: 8px 0;
+  z-index: 10001;
+}
+
+.bapps-menu-header {
+  padding: 8px 16px;
+  font-size: 12px;
+  color: #ff9500;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.bapps-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 16px;
+  color: #ffffff;
+  font-size: 13px;
+  transition: background 0.15s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.bapps-menu-item:hover:not(.disabled):not(.current) {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.bapps-menu-item.current {
+  background: rgba(255, 149, 0, 0.1);
+  cursor: default;
+}
+
+.bapps-menu-item.disabled {
+  color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.bapps-menu-icon {
+  margin-right: 12px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.bapps-menu-name {
+  flex: 1;
+}
+
+.bapps-menu-badge {
+  font-size: 11px;
+  margin-left: 8px;
+  opacity: 0.7;
+}
+
+.bapps-menu-item.current .bapps-menu-badge {
+  color: #ff9500;
+}
+
+/* Regular Menu Items */
+.taskbar-menus {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.menu-container {
+  position: relative;
+  height: 100%;
+}
+
+.menu-button {
+  padding: 0 12px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s ease;
+}
+
+.menu-button:hover,
+.menu-button.active {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.menu-dropdown {
+  position: absolute;
+  top: 32px;
+  left: 0;
+  min-width: 200px;
+  background: #1a1a1a;
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+  padding: 4px 0;
+  z-index: 10001;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 4px 12px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: left;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.menu-item:hover {
+  background: rgba(0, 149, 255, 0.3);
+}
+
+.menu-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 4px 0;
+}
+
+.menu-shortcut {
+  opacity: 0.6;
+  font-size: 12px;
+  margin-left: 20px;
+}

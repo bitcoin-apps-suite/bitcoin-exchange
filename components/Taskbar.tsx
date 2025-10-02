@@ -1,173 +1,193 @@
-'use client'
-
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react';
+import './TaskBar.css';
 
 interface MenuItem {
-  label?: string
-  action?: () => void
-  href?: string
-  divider?: boolean
-  shortcut?: string
+  label?: string;
+  action?: () => void;
+  href?: string;
+  divider?: boolean;
+  shortcut?: string;
 }
 
 interface MenuData {
-  label: string
-  items: MenuItem[]
+  label: string;
+  items: MenuItem[];
 }
 
-interface CleanTaskbarProps {
-  isAuthenticated: boolean
-  currentUser: any
-  onLogout: () => void
-  onNewOrder?: () => void
-  onOpenWallet?: () => void
-  onToggleDevSidebar?: () => void
-}
+const TaskBar: React.FC = () => {
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [showBAppsMenu, setShowBAppsMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
-const CleanTaskbar: React.FC<CleanTaskbarProps> = ({ 
-  isAuthenticated, 
-  currentUser, 
-  onLogout,
-  onNewOrder,
-  onOpenWallet,
-  onToggleDevSidebar
-}) => {
-  const [activeMenu, setActiveMenu] = useState<string | null>(null)
-  const [showBitcoinSuite, setShowBitcoinSuite] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
-  const [showMobileMenu, setShowMobileMenu] = useState(false)
-  const menuRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-    
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setActiveMenu(null)
-      }
-    }
-
-    handleResize()
-    window.addEventListener('resize', handleResize)
-    document.addEventListener('mousedown', handleClickOutside)
-    
-    return () => {
-      window.removeEventListener('resize', handleResize)
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [])
+  const bitcoinApps = [
+    { name: 'Bitcoin Apps Store', color: '#f97316', url: 'https://www.bitcoinapps.store/' },
+    { name: 'Bitcoin Wallet', color: '#eab308', url: 'https://bitcoin-wallet-sable.vercel.app' },
+    { name: 'Bitcoin Email', color: '#ef4444', url: 'https://bitcoin-email.vercel.app' },
+    { name: 'Bitcoin Music', color: '#a855f7', url: 'https://bitcoin-music.vercel.app' },
+    { name: 'Bitcoin Writer', color: '#f97316', url: 'https://bitcoin-writer.vercel.app' },
+    { name: 'Bitcoin Drive', color: '#22c55e', url: 'https://bitcoin-drive.vercel.app' },
+    { name: 'Bitcoin Calendar', color: '#d946ef', url: 'https://bitcoin-calendar.vercel.app' },
+    { name: 'Bitcoin Exchange', color: '#10b981', url: '#', current: true },
+    { name: 'Bitcoin Search', color: '#3b82f6', url: 'https://bitcoin-search.vercel.app' },
+    { name: 'Bitcoin Spreadsheet', color: '#3b82f6', url: 'https://bitcoin-spreadsheet.vercel.app' },
+    { name: 'Bitcoin Shares', color: '#f43f5e', url: 'https://bitcoin-shares.vercel.app', disabled: true },
+    { name: 'Bitcoin Jobs', color: '#22d3ee', url: 'https://bitcoin-jobs.vercel.app/' },
+    { name: 'Bitcoin Art', color: '#ec4899', url: 'https://bitcoin-art.vercel.app' },
+    { name: 'Bitcoin Education', color: '#6366f1', url: 'https://bitcoin-education-theta.vercel.app/' },
+    { name: 'Bitcoin Paint', color: '#f59e0b', url: 'https://bitcoin-paint.vercel.app' },
+    { name: 'Bitcoin Video', color: '#8b5cf6', url: 'https://bitcoin-video-nine.vercel.app/' },
+  ];
 
   const menus: MenuData[] = [
     {
       label: 'Bitcoin Exchange',
       items: [
-        { label: 'Home', action: () => { window.location.href = '/' }},
+        { label: 'About Bitcoin Exchange', action: () => alert('Bitcoin Exchange v1.0\n\nDecentralized trading on Bitcoin SV\n\n© 2025 The Bitcoin Corporation LTD') },
         { divider: true },
-        { label: 'About Bitcoin Exchange', action: () => alert('Bitcoin Exchange v1.0\n\nThe CPU of the World\'s Economy\nDecentralized exchange on Bitcoin SV\n\n© 2025 The Bitcoin Corporation LTD\nRegistered in England and Wales • Company No. 16735102\nAll rights reserved\n\nBuilt with BSV Teranode integration') },
-        { label: 'Features', action: () => {} },
+        { label: 'Preferences...', shortcut: '⌘,', action: () => console.log('Preferences') },
         { divider: true },
-        { label: 'Preferences...', shortcut: '⌘,', action: () => {} },
-        { label: 'Exchange Settings...', action: () => {} },
-        { divider: true },
-        { label: 'Hide Bitcoin Exchange', shortcut: '⌘H', action: () => {} },
-        { label: 'Hide Others', shortcut: '⌥⌘H', action: () => {} },
-        { divider: true },
-        { label: isAuthenticated ? 'Disconnect Wallet' : 'Connect Wallet', shortcut: '⌘Q', action: isAuthenticated ? onLogout : () => {} }
+        { label: 'Quit', shortcut: '⌘Q', action: () => console.log('Quit') }
       ]
     },
     {
       label: 'Trading',
       items: [
-        { label: 'New Order', shortcut: '⌘N', action: onNewOrder || (() => {}) },
-        { label: 'Order History', shortcut: '⌘H', action: () => {} },
-        { label: 'Portfolio', shortcut: '⌘P', action: () => {} },
+        { label: 'Buy Bitcoin', shortcut: '⌘B', action: () => console.log('Buy') },
+        { label: 'Sell Bitcoin', shortcut: '⌘S', action: () => console.log('Sell') },
         { divider: true },
-        { label: 'Market Data', action: () => {} },
-        { label: 'Price Alerts', action: () => {} },
-        { divider: true },
-        { label: 'Import Orders', action: () => {} },
-        { label: 'Export Trades', action: () => {} },
-        { label: 'Trading Report', action: () => {} }
+        { label: 'Market Orders', action: () => console.log('Market Orders') },
+        { label: 'Limit Orders', action: () => console.log('Limit Orders') },
+        { label: 'Stop Orders', action: () => console.log('Stop Orders') }
       ]
     },
     {
-      label: 'Markets',
+      label: 'Portfolio',
       items: [
-        { label: 'Bitcoin Apps Tokens', action: () => {} },
-        { label: 'Computational Resources', action: () => {} },
-        { label: 'AI Services', action: () => {} },
-        { divider: true },
-        { label: 'Market Analytics', action: () => {} },
-        { label: 'Volume Analysis', action: () => {} },
-        { label: 'Price Discovery', action: () => {} }
+        { label: 'Dashboard', shortcut: '⌘D', action: () => console.log('Dashboard') },
+        { label: 'Holdings', action: () => console.log('Holdings') },
+        { label: 'Transactions', action: () => console.log('Transactions') }
       ]
     },
     {
-      label: 'Bitcoin Apps',
+      label: 'View',
       items: [
-        { label: 'Bitcoin Writer', href: 'https://bitcoin-writer.vercel.app' },
-        { label: 'Bitcoin Drive', href: 'https://bitcoin-drive.vercel.app' },
-        { label: 'Bitcoin Music', href: 'https://bitcoin-music.vercel.app' },
-        { label: 'Bitcoin Video', href: 'https://bitcoin-video-nine.vercel.app/' },
-        { label: 'Bitcoin Art', href: 'https://bitcoin-art.vercel.app' },
-        { label: 'Bitcoin Education', href: 'https://bitcoin-education-theta.vercel.app' },
-        { label: 'Bitcoin Jobs', href: 'https://bitcoin-jobs.vercel.app' },
+        { label: 'Toggle Sidebar', shortcut: '⌥⌘S', action: () => console.log('Toggle sidebar') },
+        { label: 'Toggle Dark Mode', shortcut: '⌥⌘D', action: () => console.log('Toggle dark mode') },
         { divider: true },
-        { label: 'Apps Store', href: 'https://www.bitcoinapps.store' },
+        { label: 'Enter Full Screen', shortcut: '⌃⌘F', action: () => document.documentElement.requestFullscreen() }
       ]
     },
     {
-      label: 'Developer',
+      label: 'Window',
       items: [
-        { label: 'API Documentation', action: () => {} },
-        { label: 'Exchange SDK', action: () => {} },
-        { label: 'Trading Bots', action: () => {} },
-        { label: 'Market Data Feed', action: () => {} },
+        { label: 'Minimize', shortcut: '⌘M', action: () => console.log('Minimize') },
+        { label: 'Zoom', action: () => console.log('Zoom') }
+      ]
+    },
+    {
+      label: 'Help',
+      items: [
+        { label: 'Trading Guide', action: () => console.log('Trading Guide') },
+        { label: 'API Documentation', href: 'https://docs.bitcoin-exchange.com' },
         { divider: true },
-        { label: 'Toggle Dev Console', action: onToggleDevSidebar, shortcut: '⌘D' },
-        { label: 'Network Stats', action: () => {} },
+        { label: 'Contact Support', action: () => console.log('Support') }
       ]
     }
-  ]
+  ];
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setActiveMenu(null);
+        setShowBAppsMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
-    <div ref={menuRef} className="bg-gray-900 border-b border-gray-700 text-white select-none relative z-50">
-      {/* Desktop Menu */}
-      <div className="hidden md:flex items-center px-4 py-1 text-sm">
+    <div 
+      ref={menuRef}
+      className="taskbar"
+    >
+      {/* bApps Menu Button - Multicolored B */}
+      <button
+        className="bapps-menu-btn"
+        onClick={() => {
+          setShowBAppsMenu(!showBAppsMenu);
+          setActiveMenu(null);
+        }}
+        title="Bitcoin Apps"
+      >
+        <span className="bitcoin-logo">B</span>
+      </button>
+
+      {/* bApps Dropdown */}
+      {showBAppsMenu && (
+        <div className="bapps-menu-dropdown">
+          <div className="bapps-menu-header">
+            Bitcoin Apps Suite
+          </div>
+          {bitcoinApps.map((app) => (
+            <div
+              key={app.name}
+              className={`bapps-menu-item ${app.current ? 'current' : ''} ${app.disabled ? 'disabled' : ''}`}
+              onClick={() => {
+                if (!app.disabled && !app.current && app.url !== '#') {
+                  window.location.href = app.url;
+                }
+              }}
+            >
+              <span className="bapps-menu-icon" style={{ color: app.color }}>₿</span>
+              <span className="bapps-menu-name">{app.name}</span>
+              {app.current && <span className="bapps-menu-badge">Current</span>}
+              {app.disabled && <span className="bapps-menu-badge">Soon</span>}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Regular Menu Items */}
+      <div className="taskbar-menus">
         {menus.map((menu) => (
-          <div key={menu.label} className="relative">
+          <div key={menu.label} className="menu-container">
             <button
-              className={`px-3 py-1 rounded transition-colors ${
-                activeMenu === menu.label
-                  ? 'bg-[#ffa500] text-black'
-                  : 'hover:bg-gray-800'
-              }`}
+              className={`menu-button ${activeMenu === menu.label ? 'active' : ''}`}
               onClick={() => setActiveMenu(activeMenu === menu.label ? null : menu.label)}
+              onMouseEnter={() => activeMenu && setActiveMenu(menu.label)}
             >
               {menu.label}
             </button>
-            
+
             {activeMenu === menu.label && (
-              <div className="absolute top-full left-0 mt-1 w-56 bg-gray-800 border border-gray-600 rounded-md shadow-xl z-50">
+              <div className="menu-dropdown">
                 {menu.items.map((item, index) => (
                   item.divider ? (
-                    <div key={index} className="border-t border-gray-600 my-1" />
+                    <div key={index} className="menu-divider" />
+                  ) : item.href ? (
+                    <a
+                      key={index}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="menu-item"
+                    >
+                      <span>{item.label}</span>
+                      {item.shortcut && <span className="menu-shortcut">{item.shortcut}</span>}
+                    </a>
                   ) : (
                     <button
                       key={index}
-                      className="w-full text-left px-4 py-2 text-sm hover:bg-gray-700 flex justify-between items-center"
+                      className="menu-item"
                       onClick={() => {
-                        if (item.action) item.action()
-                        if (item.href) window.open(item.href, '_blank')
-                        setActiveMenu(null)
+                        item.action?.();
+                        setActiveMenu(null);
                       }}
                     >
                       <span>{item.label}</span>
-                      {item.shortcut && (
-                        <span className="text-gray-400 text-xs font-mono">{item.shortcut}</span>
-                      )}
+                      {item.shortcut && <span className="menu-shortcut">{item.shortcut}</span>}
                     </button>
                   )
                 ))}
@@ -175,69 +195,9 @@ const CleanTaskbar: React.FC<CleanTaskbarProps> = ({
             )}
           </div>
         ))}
-        
-        {/* Right side - user info */}
-        <div className="ml-auto flex items-center space-x-2">
-          {isAuthenticated && currentUser ? (
-            <div className="flex items-center space-x-2 text-xs">
-              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              <span className="text-gray-300">{currentUser.name}</span>
-            </div>
-          ) : (
-            <div className="flex items-center space-x-2 text-xs">
-              <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-              <span className="text-gray-400">Not Connected</span>
-            </div>
-          )}
-        </div>
       </div>
-
-      {/* Mobile Menu */}
-      <div className="md:hidden flex items-center justify-between px-4 py-2">
-        <div className="flex items-center space-x-2">
-          <div className="w-6 h-6 bg-[#ffa500] rounded-sm flex items-center justify-center">
-            <span className="text-black font-bold text-sm">₿</span>
-          </div>
-          <span className="font-medium">Exchange</span>
-        </div>
-        
-        <button
-          className="p-2"
-          onClick={() => setShowMobileMenu(!showMobileMenu)}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </div>
-      
-      {/* Mobile Menu Dropdown */}
-      {showMobileMenu && (
-        <div className="md:hidden bg-gray-800 border-t border-gray-700">
-          {menus.map((menu) => (
-            <div key={menu.label} className="border-b border-gray-700 last:border-b-0">
-              <div className="px-4 py-2 font-medium text-[#ffa500]">{menu.label}</div>
-              {menu.items.map((item, index) => (
-                !item.divider && (
-                  <button
-                    key={index}
-                    className="w-full text-left px-6 py-2 text-sm hover:bg-gray-700"
-                    onClick={() => {
-                      if (item.action) item.action()
-                      if (item.href) window.open(item.href, '_blank')
-                      setShowMobileMenu(false)
-                    }}
-                  >
-                    {item.label}
-                  </button>
-                )
-              ))}
-            </div>
-          ))}
-        </div>
-      )}
     </div>
-  )
-}
+  );
+};
 
-export default CleanTaskbar
+export default TaskBar;

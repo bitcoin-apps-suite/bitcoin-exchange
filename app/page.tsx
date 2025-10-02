@@ -1,8 +1,7 @@
 'use client'
 
-// import { BitcoinOSProvider } from '@bitcoin-os/bridge'
 import { useState, useEffect } from 'react'
-import CleanTaskbar from '../components/Taskbar'
+import TaskBar from '../components/TaskBar'
 import DevSidebar from '../components/DevSidebar'
 import Dock from '../components/Dock'
 import ProofOfConceptBanner from '../components/ProofOfConceptBanner'
@@ -25,7 +24,7 @@ interface Token {
 export default function BitcoinExchange() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [currentUser, setCurrentUser] = useState<any>(null)
-  const [showDevSidebar, setShowDevSidebar] = useState(false)
+  const [showDevSidebar, setShowDevSidebar] = useState(true)
   const [selectedToken, setSelectedToken] = useState<Token | null>(null)
   const [openWindows, setOpenWindows] = useState<string[]>(['Exchange'])
   const [activeWindow, setActiveWindow] = useState<string | null>('Exchange')
@@ -73,29 +72,20 @@ export default function BitcoinExchange() {
 
   return (
       <div className="min-h-screen bg-black text-white flex flex-col">
-        {/* Proof of Concept Banner */}
+        {/* 1. Proof of Concept Banner - Top */}
         <ProofOfConceptBanner />
         
-        {/* Taskbar */}
-        <CleanTaskbar 
-          isAuthenticated={isAuthenticated}
-          currentUser={currentUser}
-          onLogout={handleLogout}
-          onNewOrder={handleNewOrder}
-          onOpenWallet={handleOpenWallet}
-          onToggleDevSidebar={handleToggleDevSidebar}
-        />
+        {/* 2. TaskBar - Below PoC */}
+        <TaskBar />
+        
+        {/* 3. DevSidebar - Left side */}
+        {showDevSidebar && <DevSidebar />}
 
         {/* Main Content Container */}
-        <div className="flex flex-1 relative">
-          {/* Dev Sidebar */}
-          <DevSidebar 
-            isVisible={showDevSidebar}
-            onClose={() => setShowDevSidebar(false)}
-          />
+        <div className="flex flex-1 relative" style={{ marginTop: '72px' }}>
 
           {/* Main Content */}
-          <main className={`flex-1 transition-all duration-300 ${showDevSidebar ? 'ml-80' : 'ml-0'}`}>
+          <main className={`flex-1 transition-all duration-300 ${showDevSidebar ? 'ml-[200px]' : 'ml-0'}`}>
             {/* Hero Section */}
             <div className="bg-gradient-to-r from-purple-900/20 via-orange-900/20 to-blue-900/20 border-b border-gray-800">
               <div className="max-w-7xl mx-auto px-6 py-8">
