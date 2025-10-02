@@ -23,11 +23,9 @@ interface Token {
 
 export default function BitcoinExchange() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [currentUser, setCurrentUser] = useState<{ name: string; address: string } | null>(null)
-  const [showDevSidebar, setShowDevSidebar] = useState(true)
-  const [selectedToken, setSelectedToken] = useState<Token | null>(null)
-  const [openWindows, setOpenWindows] = useState<string[]>(['Exchange'])
-  const [activeWindow, setActiveWindow] = useState<string | null>('Exchange')
+  const [, setCurrentUser] = useState<{ name: string; address: string } | null>(null)
+  const [showDevSidebar] = useState(true)
+  const [, setSelectedToken] = useState<Token | null>(null)
 
   // const config = {
   //   context: {
@@ -49,22 +47,6 @@ export default function BitcoinExchange() {
     setCurrentUser({ name: 'Demo User', address: 'bc1q...' })
   }
 
-  const handleLogout = () => {
-    setIsAuthenticated(false)
-    setCurrentUser(null)
-  }
-
-  const handleNewOrder = () => {
-    console.log('New order clicked')
-  }
-
-  const handleOpenWallet = () => {
-    console.log('Open wallet clicked')
-  }
-
-  const handleToggleDevSidebar = () => {
-    setShowDevSidebar(!showDevSidebar)
-  }
 
   const handleTokenSelect = (token: Token) => {
     setSelectedToken(token)
@@ -94,7 +76,7 @@ export default function BitcoinExchange() {
                     Bitcoin <span className="text-[#ffa500]">Exchange</span>
                   </h1>
                   <p className="text-xl text-gray-300 mb-2">
-                    The CPU of the World's Economy
+                    The CPU of the World&apos;s Economy
                   </p>
                   <p className="text-gray-400 max-w-2xl mx-auto">
                     Trade Bitcoin App tokens and computational resources. Powered by BSV Teranode - 
