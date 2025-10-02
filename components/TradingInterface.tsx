@@ -39,11 +39,11 @@ interface TradingInterfaceProps {
 }
 
 const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) => {
-  const [activeTab, setActiveTab] = useState<'apps' | 'compute' | 'ai' | 'all'>('apps')
+  const [activeTab, setActiveTab] = useState<'apps' | 'compute' | 'ai' | 'storage' | 'all'>('apps')
   const [selectedToken, setSelectedToken] = useState<Token | null>(null)
   const [orderType, setOrderType] = useState<'buy' | 'sell'>('buy')
   const [searchQuery, setSearchQuery] = useState('')
-  const [priceFilter, setPriceFilter] = useState<'all' | 'under0.1' | 'under1' | 'over1'>('all')
+  const [priceFilter, setPriceFilter] = useState<'all' | 'under0.1' | '0.1to1' | 'over1'>('all')
 
   // Bitcoin Apps Tokens
   const appTokens: Token[] = [
