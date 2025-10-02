@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import TaskBar from '../components/TaskBar'
 import DevSidebar from '../components/DevSidebar'
 import Dock from '../components/Dock'
@@ -23,7 +23,7 @@ interface Token {
 
 export default function BitcoinExchange() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [currentUser, setCurrentUser] = useState<any>(null)
+  const [currentUser, setCurrentUser] = useState<{ name: string; address: string } | null>(null)
   const [showDevSidebar, setShowDevSidebar] = useState(true)
   const [selectedToken, setSelectedToken] = useState<Token | null>(null)
   const [openWindows, setOpenWindows] = useState<string[]>(['Exchange'])

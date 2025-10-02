@@ -9,7 +9,7 @@ const ProofOfConceptBanner: React.FC = () => {
     <div className="poc-bar">
       <div className="poc-content">
         <AlertTriangle className="poc-icon" size={16} />
-        <span className="poc-text">PROOF OF CONCEPT - Bitcoin Exchange: The CPU of the World's Economy</span>
+        <span className="poc-text">PROOF OF CONCEPT - Bitcoin Exchange: The CPU of the World&apos;s Economy</span>
         <AlertTriangle className="poc-icon" size={16} />
       </div>
     </div>

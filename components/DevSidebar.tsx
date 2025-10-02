@@ -5,7 +5,13 @@ import './DevSidebar.css';
 const DevSidebar: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const menuItems = [
+  const menuItems: Array<{
+    icon?: React.ComponentType<{ size?: number }>;
+    label?: string;
+    path?: string;
+    divider?: boolean;
+    external?: boolean;
+  }> = [
     { icon: TrendingUp, label: 'Trading', path: '/trading' },
     { icon: DollarSign, label: 'Markets', path: '/markets' },
     { icon: BarChart3, label: 'Analytics', path: '/analytics' },
@@ -34,7 +40,7 @@ const DevSidebar: React.FC = () => {
             return <div key={index} className="sidebar-divider" />;
           }
 
-          const Icon = item.icon;
+          const Icon = item.icon!;
           return (
             <a
               key={index}

@@ -5,7 +5,7 @@ import './Dock.css';
 interface DockApp {
   id?: string;
   name: string;
-  icon: any;
+  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
   color: string;
   url?: string;
   disabled?: boolean;
