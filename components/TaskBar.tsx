@@ -36,6 +36,7 @@ const TaskBar: React.FC = () => {
     { name: 'Bitcoin Education', color: '#6366f1', url: 'https://bitcoin-education-theta.vercel.app/' },
     { name: 'Bitcoin Paint', color: '#f59e0b', url: 'https://bitcoin-paint.vercel.app' },
     { name: 'Bitcoin Video', color: '#8b5cf6', url: 'https://bitcoin-video-nine.vercel.app/' },
+    { name: 'Bitcoin Code', color: '#06b6d4', url: 'https://bitcoin-code.vercel.app/' },
   ];
 
   const menus: MenuData[] = [
