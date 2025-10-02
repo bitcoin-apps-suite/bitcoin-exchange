@@ -25,6 +25,7 @@ export default function BitcoinExchange() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [, setCurrentUser] = useState<{ name: string; address: string } | null>(null)
   const [showDevSidebar] = useState(true)
+  const [isDevSidebarCollapsed, setIsDevSidebarCollapsed] = useState(false)
   const [, setSelectedToken] = useState<Token | null>(null)
 
   // const config = {
@@ -61,13 +62,22 @@ export default function BitcoinExchange() {
         <TaskBar />
         
         {/* 3. DevSidebar - Left side */}
-        {showDevSidebar && <DevSidebar />}
+        {showDevSidebar && (
+          <DevSidebar 
+            isCollapsed={isDevSidebarCollapsed}
+            onToggleCollapse={() => setIsDevSidebarCollapsed(!isDevSidebarCollapsed)}
+          />
+        )}
 
         {/* Main Content Container */}
         <div className="flex flex-1 relative" style={{ marginTop: '72px' }}>
 
           {/* Main Content */}
-          <main className={`flex-1 transition-all duration-300 ${showDevSidebar ? 'ml-[200px]' : 'ml-0'}`}>
+          <main className={`flex-1 transition-all duration-300 ${
+            showDevSidebar 
+              ? (isDevSidebarCollapsed ? 'ml-[60px]' : 'ml-[200px]') 
+              : 'ml-0'
+          }`}>
             {/* Hero Section */}
             <div className="bg-gradient-to-r from-purple-900/20 via-orange-900/20 to-blue-900/20 border-b border-gray-800">
               <div className="max-w-7xl mx-auto px-6 py-8">

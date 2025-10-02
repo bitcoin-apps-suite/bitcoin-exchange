@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Wallet, Mail, Music, FileText, HardDrive, Calendar, Search, Table, Share2, Briefcase, Store, Wifi, Volume2, Battery, Clock, TrendingUp, Palette, GraduationCap, Paintbrush, Video, Code, Trash2, Shield, Building2 } from 'lucide-react';
+import { Wallet, Mail, Music, FileText, HardDrive, Calendar, Search, Table, Share2, Briefcase, Store, Wifi, Volume2, Battery, Clock, TrendingUp, Palette, GraduationCap, Paintbrush, Video, Code, Shield, Building2 } from 'lucide-react';
 import './Dock.css';
 
 interface DockApp {
@@ -16,7 +16,6 @@ interface DockApp {
 const Dock: React.FC = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [mounted, setMounted] = useState(false);
-  const [showTrashWindow, setShowTrashWindow] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -70,9 +69,6 @@ const Dock: React.FC = () => {
     { name: 'Bitcoin Code', icon: Code, color: 'text-cyan-500', url: 'https://bitcoin-code.vercel.app/' },
   ];
 
-  const systemApps = [
-    { name: 'Trash', icon: Trash2, color: 'text-gray-400', action: () => setShowTrashWindow(true) },
-  ];
 
   const handleAppClick = (app: DockApp) => {
     if (!app.disabled && app.url && !app.current) {
@@ -97,23 +93,6 @@ const Dock: React.FC = () => {
             >
               <Icon className="dock-app-icon" style={{ color: getIconColor(app.color) }} />
               {app.current && <span className="dock-indicator" />}
-            </button>
-          );
-        })}
-        
-        <div className="dock-divider" />
-        
-        {/* System apps */}
-        {systemApps.map((app) => {
-          const Icon = app.icon;
-          return (
-            <button
-              key={app.name}
-              className="dock-app"
-              onClick={app.action}
-              title={app.name}
-            >
-              <Icon className="dock-app-icon" style={{ color: getIconColor(app.color) }} />
             </button>
           );
         })}
@@ -151,31 +130,6 @@ const Dock: React.FC = () => {
           </div>
         </div>
       </div>
-      
-      {/* Trash Window */}
-      {showTrashWindow && (
-        <div className="trash-window">
-          <div className="trash-window-header">
-            <div className="trash-window-controls">
-              <button 
-                className="trash-window-close" 
-                onClick={() => setShowTrashWindow(false)}
-                aria-label="Close"
-              >
-                ×
-              </button>
-            </div>
-            <div className="trash-window-title">Trash</div>
-          </div>
-          <div className="trash-window-content">
-            <div className="trash-empty">
-              <Trash2 size={64} className="trash-empty-icon" />
-              <p className="trash-empty-text">Trash is Empty</p>
-              <p className="trash-empty-subtext">Items you delete will appear here</p>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

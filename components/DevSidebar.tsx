@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ChevronLeft, ChevronRight, TrendingUp, DollarSign, BarChart3, Settings, HelpCircle, Github, BookOpen, Activity } from 'lucide-react';
 import './DevSidebar.css';
 
-const DevSidebar: React.FC = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+interface DevSidebarProps {
+  isCollapsed: boolean;
+  onToggleCollapse: () => void;
+}
+
+const DevSidebar: React.FC<DevSidebarProps> = ({ isCollapsed, onToggleCollapse }) => {
 
   const menuItems: Array<{
     icon?: React.ComponentType<{ size?: number }>;
@@ -28,7 +32,7 @@ const DevSidebar: React.FC = () => {
     <div className={`dev-sidebar ${isCollapsed ? 'collapsed' : ''}`}>
       <button
         className="sidebar-toggle"
-        onClick={() => setIsCollapsed(!isCollapsed)}
+        onClick={onToggleCollapse}
         title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
       >
         {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
