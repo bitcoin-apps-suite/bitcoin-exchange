@@ -114,6 +114,8 @@ const DevSidebar: React.FC<DevSidebarProps> = ({ isCollapsed, onToggleCollapse }
             ) : null;
           }
 
+          if (!item.icon) return null;
+          
           const Icon = item.icon;
           const isActive = pathname === item.path;
 

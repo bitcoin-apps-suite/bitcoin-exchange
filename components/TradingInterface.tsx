@@ -42,7 +42,7 @@ interface TradingInterfaceProps {
 }
 
 const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) => {
-  const [activeTab, setActiveTab] = useState<'apps' | 'compute' | 'ai' | 'storage' | 'all'>('apps')
+  const [activeTab, setActiveTab] = useState<'bex' | 'compute' | 'ai' | 'storage' | 'all'>('bex')
   const [selectedToken, setSelectedToken] = useState<Token | null>(null)
   const [orderType, setOrderType] = useState<'buy' | 'sell'>('buy')
   const [searchQuery, setSearchQuery] = useState('')
@@ -149,7 +149,7 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
       id: 'bwriter',
       symbol: '$bWriter',
       name: 'Bitcoin Writer',
-      type: 'app',
+      type: 'bex',
       price: 0.42,
       change24h: 12.5,
       volume24h: 142000,
@@ -161,7 +161,7 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
       id: 'bvideo',
       symbol: '$bVideo',
       name: 'Bitcoin Video',
-      type: 'app',
+      type: 'bex',
       price: 0.35,
       change24h: 8.4,
       volume24h: 84000,
@@ -173,7 +173,7 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
       id: 'bart',
       symbol: '$bArt',
       name: 'Bitcoin Art',
-      type: 'app',
+      type: 'bex',
       price: 0.33,
       change24h: 14.2,
       volume24h: 78000,
@@ -185,7 +185,7 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
       id: 'bmusic',
       symbol: '$bMusic',
       name: 'Bitcoin Music',
-      type: 'app',
+      type: 'bex',
       price: 0.37,
       change24h: 12.8,
       volume24h: 68000,
@@ -197,7 +197,7 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
       id: 'beducation',
       symbol: '$bEducation',
       name: 'Bitcoin Education',
-      type: 'app',
+      type: 'bex',
       price: 0.19,
       change24h: 11.7,
       volume24h: 41000,
@@ -209,7 +209,7 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
       id: 'bjobs',
       symbol: '$bJobs',
       name: 'Bitcoin Jobs',
-      type: 'app',
+      type: 'bex',
       price: 0.45,
       change24h: 22.3,
       volume24h: 156000,
@@ -221,7 +221,7 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
       id: 'bemail',
       symbol: '$bEmail',
       name: 'Bitcoin Email',
-      type: 'app',
+      type: 'bex',
       price: 0.24,
       change24h: 5.7,
       volume24h: 54000,
@@ -345,9 +345,9 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
     if (activeTab !== 'all') {
       tokens = tokens.filter(token => {
         if (activeTab === 'bex') return token.type === 'bex'
-        if (activeTab === 'apps') return token.type === 'app'
         if (activeTab === 'compute') return token.type === 'compute' || token.type === 'storage'
         if (activeTab === 'ai') return token.type === 'ai'
+        if (activeTab === 'storage') return token.type === 'storage'
         return true
       })
     }
@@ -390,14 +390,13 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
         <div className="flex gap-1 mb-4">
           {[
             { id: 'bex', label: 'bEX Tokens', count: bexTokens.length },
-            { id: 'apps', label: 'Apps', count: appTokens.length },
             { id: 'compute', label: 'Compute', count: computeTokens.length },
             { id: 'ai', label: 'AI', count: aiTokens.length },
             { id: 'all', label: 'All', count: allTokens.length }
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as 'exchange' | 'all' | 'apps' | 'compute' | 'ai' | 'storage')}
+              onClick={() => setActiveTab(tab.id as 'bex' | 'all' | 'compute' | 'ai' | 'storage')}
               className={`px-3 py-1.5 text-xs rounded font-light ${
                 activeTab === tab.id
                   ? 'bg-green-500/20 text-green-500 border border-green-500'

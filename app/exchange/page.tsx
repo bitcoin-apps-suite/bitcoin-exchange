@@ -12,7 +12,7 @@ interface Token {
   id: string
   symbol: string
   name: string
-  type: 'app' | 'compute' | 'ai' | 'storage'
+  type: 'bex' | 'compute' | 'ai' | 'storage'
   price: number
   change24h: number
   volume24h: number
@@ -20,6 +20,9 @@ interface Token {
   available?: number
   unit?: string
   description: string
+  icon?: React.ReactNode
+  tradingVolume?: number
+  users?: number
 }
 
 export default function ExchangePage() {
