@@ -264,7 +264,7 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
     if (priceFilter !== 'all') {
       tokens = tokens.filter(token => {
         if (priceFilter === 'under0.1') return token.price < 0.1
-        if (priceFilter === 'under1') return token.price < 1
+        if (priceFilter === '0.1to1') return token.price >= 0.1 && token.price < 1
         if (priceFilter === 'over1') return token.price >= 1
         return true
       })
