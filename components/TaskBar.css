@@ -35,20 +35,24 @@
 .bitcoin-logo {
   font-size: 18px;
   font-weight: bold;
-  background: linear-gradient(
-    135deg,
-    #ff6b6b,
-    #f97316,
-    #feca57,
-    #48dbfb,
-    #0abde3,
-    #a55eea,
-    #fd79a8
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #d946ef;
+  opacity: 0.95;
+  text-shadow: 0 0 10px rgba(217, 70, 239, 0.3);
+  transition: all 0.2s ease;
+  animation: colorCycle 15s ease infinite;
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+}
+
+@keyframes colorCycle {
+  0% { color: #ff6b6b; }
+  12.5% { color: #f97316; }
+  25% { color: #feca57; }
+  37.5% { color: #48dbfb; }
+  50% { color: #0abde3; }
+  62.5% { color: #a55eea; }
+  75% { color: #fd79a8; }
+  87.5% { color: #ff6b6b; }
+  100% { color: #ff6b6b; }
 }
 
 /* bApps Dropdown */
