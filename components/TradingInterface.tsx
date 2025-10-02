@@ -6,8 +6,6 @@ import {
   TrendingDown, 
   Search, 
   RefreshCw, 
-  DollarSign,
-  Activity,
   BarChart3,
   Cpu,
   HardDrive,
@@ -299,7 +297,7 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
+              onClick={() => setActiveTab(tab.id as 'all' | 'apps' | 'compute' | 'ai' | 'storage')}
               className={`px-3 py-1.5 text-xs rounded ${
                 activeTab === tab.id
                   ? 'bg-[#ffa500]/20 text-[#ffa500] border border-[#ffa500]'
@@ -325,7 +323,7 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
           </div>
           <select
             value={priceFilter}
-            onChange={(e) => setPriceFilter(e.target.value as any)}
+            onChange={(e) => setPriceFilter(e.target.value as 'all' | 'under0.1' | '0.1to1' | 'over1')}
             className="w-full px-3 py-2 bg-gray-900 border border-gray-800 rounded text-sm"
           >
             <option value="all">All Prices</option>
