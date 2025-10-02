@@ -16,14 +16,15 @@ import {
   Music,
   FileText,
   Briefcase,
-  Mail
+  Mail,
+  DollarSign
 } from 'lucide-react'
 
 interface Token {
   id: string
   symbol: string
   name: string
-  type: 'app' | 'compute' | 'ai' | 'storage'
+  type: 'bex' | 'compute' | 'ai' | 'storage'
   price: number
   change24h: number
   volume24h: number
@@ -32,6 +33,8 @@ interface Token {
   unit?: string
   description: string
   icon: React.ReactNode
+  tradingVolume?: number
+  users?: number
 }
 
 interface TradingInterfaceProps {
@@ -44,6 +47,101 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
   const [orderType, setOrderType] = useState<'buy' | 'sell'>('buy')
   const [searchQuery, setSearchQuery] = useState('')
   const [priceFilter, setPriceFilter] = useState<'all' | 'under0.1' | '0.1to1' | 'over1'>('all')
+
+  // bEX Tokens - All Bitcoin Apps Exchange Tokens
+  const bexTokens: Token[] = [
+    {
+      id: 'bwriter',
+      symbol: '$bWriter',
+      name: 'Bitcoin Writer Exchange',
+      type: 'bex',
+      price: 0.42,
+      change24h: 12.5,
+      volume24h: 142000,
+      marketCap: '$2.4M',
+      users: 85000,
+      description: 'Trade document shares and writing portfolios',
+      icon: <FileText className="w-4 h-4" />
+    },
+    {
+      id: 'bmusic',
+      symbol: '$bMusic',
+      name: 'Bitcoin Music Exchange',
+      type: 'bex',
+      price: 0.37,
+      change24h: 18.2,
+      volume24h: 98000,
+      marketCap: '$1.8M',
+      users: 62000,
+      description: 'Trade music rights and artist portfolios',
+      icon: <Music className="w-4 h-4" />
+    },
+    {
+      id: 'bjobs',
+      symbol: '$bJobs',
+      name: 'Bitcoin Jobs Exchange',
+      type: 'bex',
+      price: 0.28,
+      change24h: 9.7,
+      volume24h: 67000,
+      marketCap: '$1.2M',
+      users: 45000,
+      description: 'Trade employment contracts and skill tokens',
+      icon: <Briefcase className="w-4 h-4" />
+    },
+    {
+      id: 'bwallet',
+      symbol: '$bWallet',
+      name: 'Bitcoin Wallet Exchange',
+      type: 'bex',
+      price: 0.55,
+      change24h: 15.3,
+      volume24h: 156000,
+      marketCap: '$3.1M',
+      users: 120000,
+      description: 'Trade wallet services and payment flows',
+      icon: <DollarSign className="w-4 h-4" />
+    },
+    {
+      id: 'bemail',
+      symbol: '$bEmail',
+      name: 'Bitcoin Email Exchange',
+      type: 'bex',
+      price: 0.31,
+      change24h: 22.1,
+      volume24h: 89000,
+      marketCap: '$1.5M',
+      users: 78000,
+      description: 'Trade email reputation and communication rights',
+      icon: <Mail className="w-4 h-4" />
+    },
+    {
+      id: 'bcode',
+      symbol: '$bCode',
+      name: 'Bitcoin Code Exchange',
+      type: 'bex',
+      price: 0.63,
+      change24h: 28.4,
+      volume24h: 234000,
+      marketCap: '$4.2M',
+      users: 95000,
+      description: 'Trade code repositories and development rights',
+      icon: <BookOpen className="w-4 h-4" />
+    },
+    {
+      id: 'bos',
+      symbol: '$bOS',
+      name: 'Bitcoin OS Exchange',
+      type: 'bex',
+      price: 1.25,
+      change24h: 45.8,
+      volume24h: 567000,
+      marketCap: '$12.8M',
+      users: 250000,
+      description: 'Trade computational resources and OS services',
+      icon: <Zap className="w-4 h-4" />
+    }
+  ]
 
   // Bitcoin Apps Tokens
   const appTokens: Token[] = [
@@ -239,13 +337,14 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
     }
   ]
 
-  const allTokens = [...appTokens, ...computeTokens, ...aiTokens]
+  const allTokens = [...bexTokens, ...appTokens, ...computeTokens, ...aiTokens]
 
   const getFilteredTokens = () => {
     let tokens = allTokens
     
     if (activeTab !== 'all') {
       tokens = tokens.filter(token => {
+        if (activeTab === 'bex') return token.type === 'bex'
         if (activeTab === 'apps') return token.type === 'app'
         if (activeTab === 'compute') return token.type === 'compute' || token.type === 'storage'
         if (activeTab === 'ai') return token.type === 'ai'
@@ -290,6 +389,7 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
         {/* Tabs */}
         <div className="flex gap-1 mb-4">
           {[
+            { id: 'bex', label: 'bEX Tokens', count: bexTokens.length },
             { id: 'apps', label: 'Apps', count: appTokens.length },
             { id: 'compute', label: 'Compute', count: computeTokens.length },
             { id: 'ai', label: 'AI', count: aiTokens.length },
@@ -297,10 +397,10 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as 'all' | 'apps' | 'compute' | 'ai' | 'storage')}
-              className={`px-3 py-1.5 text-xs rounded ${
+              onClick={() => setActiveTab(tab.id as 'exchange' | 'all' | 'apps' | 'compute' | 'ai' | 'storage')}
+              className={`px-3 py-1.5 text-xs rounded font-light ${
                 activeTab === tab.id
-                  ? 'bg-[#ffa500]/20 text-[#ffa500] border border-[#ffa500]'
+                  ? 'bg-green-500/20 text-green-500 border border-green-500'
                   : 'bg-gray-900 text-gray-400 border border-gray-800 hover:text-white'
               }`}
             >
@@ -318,7 +418,7 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
               placeholder="Search tokens..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-gray-900 border border-gray-800 rounded focus:border-[#ffa500] outline-none text-sm"
+              className="w-full pl-10 pr-4 py-2 bg-gray-900 border border-gray-800 rounded focus:border-green-500 outline-none text-sm"
             />
           </div>
           <select
@@ -341,13 +441,13 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
               onClick={() => handleTokenSelect(token)}
               className={`p-3 border rounded-lg cursor-pointer transition-all ${
                 selectedToken?.id === token.id 
-                  ? 'bg-[#ffa500]/10 border-[#ffa500]' 
+                  ? 'bg-green-500/10 border-green-500' 
                   : 'bg-gray-900 border-gray-800 hover:border-gray-700'
               }`}
             >
               <div className="flex items-start justify-between">
                 <div className="flex items-start gap-2">
-                  <div className="p-1.5 bg-[#ffa500]/20 rounded">
+                  <div className="p-1.5 bg-green-500/20 rounded">
                     {token.icon}
                   </div>
                   <div>

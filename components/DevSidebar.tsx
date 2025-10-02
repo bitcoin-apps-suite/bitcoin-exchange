@@ -1,5 +1,22 @@
-import React from 'react';
-import { ChevronLeft, ChevronRight, TrendingUp, DollarSign, BarChart3, Settings, HelpCircle, Github, BookOpen, Activity } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+import { 
+  ChevronLeft, 
+  ChevronRight, 
+  TrendingUp, 
+  DollarSign, 
+  BarChart3, 
+  BookOpen, 
+  Activity, 
+  Zap,
+  Package,
+  Terminal,
+  FileText,
+  Wrench,
+  GitBranch,
+  Flower2
+} from 'lucide-react';
 import './DevSidebar.css';
 
 interface DevSidebarProps {
@@ -8,58 +25,137 @@ interface DevSidebarProps {
 }
 
 const DevSidebar: React.FC<DevSidebarProps> = ({ isCollapsed, onToggleCollapse }) => {
+  const [issueCount, setIssueCount] = useState<number>(0);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    // Fetch GitHub issue count
+    fetch('https://api.github.com/repos/bitcoin-apps-suite/bitcoin-exchange/issues?state=open')
+      .then(res => res.json())
+      .then(issues => setIssueCount(Array.isArray(issues) ? issues.length : 0))
+      .catch(() => setIssueCount(0));
+  }, []);
 
   const menuItems: Array<{
-    icon?: React.ComponentType<{ size?: number }>;
-    label?: string;
     path?: string;
+    icon?: React.ComponentType<{ size: number }>;
+    label?: string;
+    badge?: string;
     divider?: boolean;
+    section?: string;
     external?: boolean;
   }> = [
-    { icon: TrendingUp, label: 'Trading', path: '/trading' },
-    { icon: DollarSign, label: 'Markets', path: '/markets' },
-    { icon: BarChart3, label: 'Analytics', path: '/analytics' },
+    // Token & Core at top
+    { path: '/token', icon: DollarSign, label: '$BEXCHANGE', badge: 'NEW' },
+    { path: '/exchange', icon: TrendingUp, label: 'Exchange Dashboard' },
+    { path: '/grants', icon: Flower2, label: 'GRANTS' },
+    
+    // Traders Section
     { divider: true },
-    { icon: Activity, label: 'API Status', path: '/status' },
-    { icon: BookOpen, label: 'Documentation', path: '/docs' },
-    { icon: Github, label: 'GitHub', path: 'https://github.com/bitcoin-exchange', external: true },
+    { section: 'TRADERS' },
+    { path: '/markets', icon: BarChart3, label: 'Market Analysis', badge: '847' },
+    { path: '/arbitrage', icon: Zap, label: 'Cross-Exchange Arbitrage' },
+    { path: '/liquidity', icon: Package, label: 'Liquidity Pools', badge: '12' },
+    
+    // $bEX Infrastructure
     { divider: true },
-    { icon: Settings, label: 'Settings', path: '/settings' },
-    { icon: HelpCircle, label: 'Help', path: '/help' }
+    { section: '$bEX INFRASTRUCTURE' },
+    { path: '/teranode', icon: Zap, label: 'Teranode Stream' },
+    { path: '/indexers', icon: Activity, label: 'Indexer Nodes', badge: '847' },
+    { path: '/firehose', icon: TrendingUp, label: 'Data Firehose' },
+    { path: '/settlements', icon: BarChart3, label: 'Settlement Layer' },
+    
+    // Blockchain Operations
+    { divider: true },
+    { section: 'BLOCKCHAIN' },
+    { path: '/exchange', icon: TrendingUp, label: 'Live Exchange' },
+    { path: '/api', icon: Terminal, label: 'API Reference' },
+    { path: '/contracts', icon: FileText, label: 'Smart Contracts', badge: issueCount > 0 ? String(issueCount) : '4' },
+    { path: '/sdk', icon: Package, label: 'Exchange SDK' },
+    { path: '/webhooks', icon: Wrench, label: 'Webhooks & Events' },
+    
+    // System
+    { divider: true },
+    { path: '/docs', icon: BookOpen, label: 'Documentation' },
+    { path: 'https://github.com/bitcoin-apps-suite/bitcoin-exchange', icon: GitBranch, label: 'GitHub', external: true },
+    { path: '/status', icon: Activity, label: 'System Status', badge: 'OK' },
+    { path: '/changelog', icon: FileText, label: 'Changelog' }
   ];
 
   return (
     <div className={`dev-sidebar ${isCollapsed ? 'collapsed' : ''}`}>
-      <button
-        className="sidebar-toggle"
-        onClick={onToggleCollapse}
-        title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-      >
-        {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
-      </button>
+      <div className="dev-sidebar-header">
+        {!isCollapsed && (
+          <div className="dev-sidebar-title">
+            <Zap className="dev-sidebar-logo" />
+            <span>Exchange Hub</span>
+          </div>
+        )}
+        <button 
+          className="dev-sidebar-toggle"
+          onClick={onToggleCollapse}
+          aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+        >
+          {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+        </button>
+      </div>
 
-      <div className="sidebar-content">
+      <nav className="dev-sidebar-nav">
         {menuItems.map((item, index) => {
           if (item.divider) {
-            return <div key={index} className="sidebar-divider" />;
+            return <div key={index} className="dev-sidebar-divider" />;
           }
 
-          const Icon = item.icon!;
+          if (item.section) {
+            return !isCollapsed ? (
+              <div key={index} className="dev-sidebar-section">
+                {item.section}
+              </div>
+            ) : null;
+          }
+
+          const Icon = item.icon;
+          const isActive = pathname === item.path;
+
+          if (item.external) {
+            return (
+              <a
+                key={`${item.path}-${index}`}
+                href={item.path}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`dev-sidebar-item ${isActive ? 'active' : ''}`}
+                title={isCollapsed ? item.label : undefined}
+              >
+                <Icon size={20} />
+                {!isCollapsed && (
+                  <>
+                    <span className="dev-sidebar-label">{item.label}</span>
+                    {item.badge && <span className="dev-sidebar-badge">{item.badge}</span>}
+                  </>
+                )}
+              </a>
+            );
+          }
+
           return (
-            <a
-              key={index}
-              href={item.external ? item.path : '#'}
-              target={item.external ? '_blank' : undefined}
-              rel={item.external ? 'noopener noreferrer' : undefined}
-              className="sidebar-item"
+            <Link
+              key={`${item.path}-${index}`}
+              href={item.path || '/'}
+              className={`dev-sidebar-item ${isActive ? 'active' : ''}`}
               title={isCollapsed ? item.label : undefined}
             >
-              <Icon size={18} />
-              {!isCollapsed && <span>{item.label}</span>}
-            </a>
+              <Icon size={20} />
+              {!isCollapsed && (
+                <>
+                  <span className="dev-sidebar-label">{item.label}</span>
+                  {item.badge && <span className="dev-sidebar-badge">{item.badge}</span>}
+                </>
+              )}
+            </Link>
           );
         })}
-      </div>
+      </nav>
     </div>
   );
 };

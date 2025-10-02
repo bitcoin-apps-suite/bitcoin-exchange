@@ -1,0 +1,266 @@
+/* Dark Theme Overrides for Bitcoin Exchange */
+
+.marketing-page.dark-theme {
+  color: #ffffff;
+  background: #0a0a0a;
+}
+
+/* Hero Section - Dark */
+.dark-theme .hero-section {
+  background: linear-gradient(135deg, #0a0a0a 0%, #111111 100%);
+}
+
+.dark-theme .hero-gradient {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.2) 100%);
+}
+
+.dark-theme .hero-grid {
+  background-image: 
+    linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px);
+}
+
+.dark-theme .title-bitcoin {
+  color: #ffffff;
+}
+
+.dark-theme .title-exchange {
+  color: #10b981;
+}
+
+.dark-theme .hero-subtitle {
+  color: #9ca3af;
+}
+
+.dark-theme .stat-number {
+  color: #10b981;
+}
+
+.dark-theme .stat-label {
+  color: #6b7280;
+}
+
+.dark-theme .cta-secondary {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.dark-theme .cta-secondary:hover {
+  background: rgba(16, 185, 129, 0.2);
+}
+
+/* App Preview - Dark */
+.dark-theme .app-window {
+  background: #1a1a1a;
+  border: 1px solid #333333;
+}
+
+.dark-theme .window-header {
+  background: #1f1f1f;
+  border-bottom: 1px solid #333333;
+}
+
+.dark-theme .window-title {
+  color: #e5e7eb;
+}
+
+.dark-theme .mock-sidebar {
+  background: #1a1a1a;
+  border-right: 1px solid #333333;
+}
+
+.dark-theme .mock-nav-item {
+  color: #9ca3af;
+}
+
+.dark-theme .mock-nav-item.active {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+}
+
+.dark-theme .badge {
+  background: #10b981;
+  color: #000000;
+}
+
+.dark-theme .mock-trade {
+  border-bottom: 1px solid #333333;
+}
+
+.dark-theme .trade-symbol {
+  color: #ffffff;
+}
+
+.dark-theme .trade-name {
+  color: #9ca3af;
+}
+
+.dark-theme .trade-description {
+  color: #6b7280;
+}
+
+.dark-theme .trade-price {
+  color: #ffffff;
+}
+
+/* Features Section - Dark */
+.dark-theme .features-section {
+  background: #0f0f0f;
+}
+
+.dark-theme .section-title {
+  color: #ffffff;
+}
+
+.dark-theme .section-subtitle {
+  color: #9ca3af;
+}
+
+.dark-theme .feature-card {
+  background: #1a1a1a;
+  border: 1px solid #333333;
+}
+
+.dark-theme .feature-card:hover {
+  border-color: #10b981;
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.2);
+}
+
+.dark-theme .feature-icon.bitcoin {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.dark-theme .feature-icon.exchange,
+.dark-theme .feature-icon.liquidity,
+.dark-theme .feature-icon.indexer,
+.dark-theme .feature-icon.fees,
+.dark-theme .feature-icon.composite {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+}
+
+.dark-theme .feature-title {
+  color: #ffffff;
+}
+
+.dark-theme .feature-description {
+  color: #9ca3af;
+}
+
+/* Testimonials Section - Dark */
+.dark-theme .testimonials-section {
+  background: #0a0a0a;
+}
+
+.dark-theme .testimonial {
+  background: #1a1a1a;
+  border: 1px solid #333333;
+}
+
+.dark-theme .testimonial-content {
+  color: #e5e7eb;
+}
+
+.dark-theme .author-name {
+  color: #ffffff;
+}
+
+.dark-theme .author-title {
+  color: #9ca3af;
+}
+
+/* CTA Section - Dark (keeps the green gradient) */
+.dark-theme .cta-section {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.dark-theme .cta-primary.large {
+  background: #0a0a0a;
+  color: #10b981;
+  border: 1px solid #10b981;
+}
+
+.dark-theme .cta-primary.large:hover {
+  background: #1a1a1a;
+}
+
+/* Footer - Dark */
+.dark-theme .footer {
+  background: #000000;
+  border-top: 1px solid #333333;
+}
+
+.dark-theme .footer-brand .brand-bitcoin {
+  color: #ffffff;
+}
+
+.dark-theme .footer-brand .brand-exchange {
+  color: #10b981;
+}
+
+.dark-theme .footer-tagline {
+  color: #6b7280;
+}
+
+.dark-theme .link-group h4 {
+  color: #ffffff;
+}
+
+.dark-theme .link-group a {
+  color: #9ca3af;
+}
+
+.dark-theme .link-group a:hover {
+  color: #10b981;
+}
+
+.dark-theme .footer-bottom {
+  border-top: 1px solid #333333;
+}
+
+.dark-theme .footer-copyright {
+  color: #6b7280;
+}
+
+.dark-theme .social-link {
+  color: #9ca3af;
+}
+
+.dark-theme .social-link:hover {
+  color: #10b981;
+}
+
+/* Dark Theme Specific Glows and Effects */
+.dark-theme .bitcoin-symbol {
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+}
+
+.dark-theme .hero-title {
+  text-shadow: 0 0 30px rgba(16, 185, 129, 0.1);
+}
+
+.dark-theme .cta-primary {
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+}
+
+.dark-theme .cta-primary:hover {
+  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.6);
+}
+
+/* Responsive Dark Theme Adjustments */
+@media (max-width: 768px) {
+  .dark-theme .hero-content {
+    padding: 0 1rem;
+  }
+  
+  .dark-theme .section-container {
+    padding: 0 1rem;
+  }
+  
+  .dark-theme .cta-content {
+    padding: 0 1rem;
+  }
+}

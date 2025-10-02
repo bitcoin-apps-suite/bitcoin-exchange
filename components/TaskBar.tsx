@@ -7,6 +7,7 @@ interface MenuItem {
   href?: string;
   divider?: boolean;
   shortcut?: string;
+  external?: boolean;
 }
 
 interface MenuData {
@@ -47,22 +48,60 @@ const TaskBar: React.FC = () => {
     {
       label: 'Bitcoin Exchange',
       items: [
-        { label: 'About Bitcoin Exchange', action: () => alert('Bitcoin Exchange v1.0\n\nDecentralized trading on Bitcoin SV\n\n© 2025 The Bitcoin Corporation LTD') },
+        { label: 'About Bitcoin Exchange', action: () => alert('Bitcoin Exchange v1.0\n\nAn Exchange of Exchanges\n\n© 2025 The Bitcoin Corporation LTD') },
+        { divider: true },
+        { label: '$BEXCHANGE Token', action: () => window.location.href = '/token' },
+        { label: 'Exchange Dashboard', action: () => window.location.href = '/exchange' },
         { divider: true },
         { label: 'Preferences...', shortcut: '⌘,', action: () => console.log('Preferences') },
         { divider: true },
-        { label: 'Quit', shortcut: '⌘Q', action: () => console.log('Quit') }
+        { label: 'Hide Bitcoin Exchange', shortcut: '⌘H', action: () => console.log('Hide') },
+        { label: 'Hide Others', shortcut: '⌥⌘H', action: () => console.log('Hide Others') },
+        { label: 'Show All', action: () => console.log('Show All') },
+        { divider: true },
+        { label: 'Quit Bitcoin Exchange', shortcut: '⌘Q', action: () => console.log('Quit') }
+      ]
+    },
+    {
+      label: 'File',
+      items: [
+        { label: 'New Portfolio', shortcut: '⌘N', action: () => console.log('New Portfolio') },
+        { label: 'Open Portfolio...', shortcut: '⌘O', action: () => console.log('Open Portfolio') },
+        { label: 'Recent Portfolios', action: () => console.log('Recent') },
+        { divider: true },
+        { label: 'Close Portfolio', shortcut: '⌘W', action: () => console.log('Close') },
+        { label: 'Save Portfolio', shortcut: '⌘S', action: () => console.log('Save') },
+        { label: 'Save As...', shortcut: '⇧⌘S', action: () => console.log('Save As') },
+        { divider: true },
+        { label: 'Export Trading Data...', action: () => console.log('Export') },
+        { label: 'Import Portfolio...', action: () => console.log('Import') }
       ]
     },
     {
       label: 'Trading',
       items: [
-        { label: 'Buy Bitcoin', shortcut: '⌘B', action: () => console.log('Buy') },
-        { label: 'Sell Bitcoin', shortcut: '⌘S', action: () => console.log('Sell') },
+        { label: 'Buy Exchange Token', shortcut: '⌘B', action: () => console.log('Buy') },
+        { label: 'Sell Exchange Token', shortcut: '⌘S', action: () => console.log('Sell') },
         { divider: true },
         { label: 'Market Orders', action: () => console.log('Market Orders') },
         { label: 'Limit Orders', action: () => console.log('Limit Orders') },
-        { label: 'Stop Orders', action: () => console.log('Stop Orders') }
+        { label: 'Stop Loss Orders', action: () => console.log('Stop Orders') },
+        { divider: true },
+        { label: 'Order History', action: () => console.log('Order History') },
+        { label: 'Trade History', action: () => console.log('Trade History') }
+      ]
+    },
+    {
+      label: 'Blockchain',
+      items: [
+        { label: 'Save Portfolio to Blockchain', action: () => console.log('Save to Blockchain') },
+        { label: 'Verify Trade on BSV', action: () => console.log('Verify Trade') },
+        { divider: true },
+        { label: 'Create Exchange NFT', action: () => console.log('Create NFT') },
+        { label: 'Tokenize Portfolio', action: () => console.log('Tokenize') },
+        { divider: true },
+        { label: 'Smart Contract Status', action: () => console.log('Contract Status') },
+        { label: 'Blockchain Explorer', href: 'https://whatsonchain.com/', external: true }
       ]
     },
     {
@@ -70,31 +109,65 @@ const TaskBar: React.FC = () => {
       items: [
         { label: 'Dashboard', shortcut: '⌘D', action: () => console.log('Dashboard') },
         { label: 'Holdings', action: () => console.log('Holdings') },
-        { label: 'Transactions', action: () => console.log('Transactions') }
+        { label: 'Performance', action: () => console.log('Performance') },
+        { divider: true },
+        { label: 'Risk Analysis', action: () => console.log('Risk Analysis') },
+        { label: 'Diversification Report', action: () => console.log('Diversification') },
+        { divider: true },
+        { label: 'Transactions', action: () => console.log('Transactions') },
+        { label: 'Tax Reports', action: () => console.log('Tax Reports') }
       ]
     },
     {
       label: 'View',
       items: [
-        { label: 'Toggle Sidebar', shortcut: '⌥⌘S', action: () => console.log('Toggle sidebar') },
-        { label: 'Toggle Dark Mode', shortcut: '⌥⌘D', action: () => console.log('Toggle dark mode') },
+        { label: 'Show Toolbar', action: () => console.log('Show Toolbar') },
+        { label: 'Show Sidebar', shortcut: '⌥⌘S', action: () => console.log('Toggle sidebar') },
+        { label: 'Show Price Charts', action: () => console.log('Show Charts') },
         { divider: true },
-        { label: 'Enter Full Screen', shortcut: '⌃⌘F', action: () => document.documentElement.requestFullscreen() }
+        { label: 'Enter Full Screen', shortcut: '⌃⌘F', action: () => document.documentElement.requestFullscreen() },
+        { divider: true },
+        { label: 'Actual Size', shortcut: '⌘0', action: () => console.log('Actual Size') },
+        { label: 'Zoom In', shortcut: '⌘+', action: () => console.log('Zoom In') },
+        { label: 'Zoom Out', shortcut: '⌘-', action: () => console.log('Zoom Out') }
+      ]
+    },
+    {
+      label: 'Tools',
+      items: [
+        { label: 'Price Alerts', action: () => console.log('Price Alerts') },
+        { label: 'Auto-Rebalancing', action: () => console.log('Auto-Rebalancing') },
+        { divider: true },
+        { label: 'Paper Trading', action: () => console.log('Paper Trading') },
+        { label: 'Backtesting', action: () => console.log('Backtesting') },
+        { divider: true },
+        { label: 'API Keys', action: () => console.log('API Keys') },
+        { label: 'Webhooks', action: () => console.log('Webhooks') }
       ]
     },
     {
       label: 'Window',
       items: [
         { label: 'Minimize', shortcut: '⌘M', action: () => console.log('Minimize') },
-        { label: 'Zoom', action: () => console.log('Zoom') }
+        { label: 'Zoom', action: () => console.log('Zoom') },
+        { divider: true },
+        { label: 'Bring All to Front', action: () => console.log('Bring All to Front') },
+        { divider: true },
+        { label: 'Documentation', action: () => window.location.href = '/docs' },
+        { label: 'API Reference', action: () => window.location.href = '/api' },
+        { label: 'Contracts Hub', action: () => window.location.href = '/contracts' }
       ]
     },
     {
       label: 'Help',
       items: [
-        { label: 'Trading Guide', action: () => console.log('Trading Guide') },
-        { label: 'API Documentation', href: 'https://docs.bitcoin-exchange.com' },
+        { label: 'Bitcoin Exchange Help', shortcut: '⌘?', action: () => console.log('Help') },
         { divider: true },
+        { label: 'Trading Guide', action: () => window.location.href = '/docs' },
+        { label: 'API Documentation', action: () => window.location.href = '/api' },
+        { label: 'GitHub Repository', href: 'https://github.com/bitcoin-apps-suite/bitcoin-exchange', external: true },
+        { divider: true },
+        { label: 'Report an Issue', href: 'https://github.com/bitcoin-apps-suite/bitcoin-exchange/issues', external: true },
         { label: 'Contact Support', action: () => console.log('Support') }
       ]
     }
@@ -117,7 +190,7 @@ const TaskBar: React.FC = () => {
       ref={menuRef}
       className="taskbar"
     >
-      {/* bApps Menu Button - Multicolored B */}
+      {/* bApps Menu Button - Green B */}
       <button
         className="bapps-menu-btn"
         onClick={() => {
@@ -126,7 +199,7 @@ const TaskBar: React.FC = () => {
         }}
         title="Bitcoin Apps"
       >
-        <span className="bitcoin-logo">B</span>
+        <span className="bitcoin-logo green">B</span>
       </button>
 
       {/* bApps Dropdown */}

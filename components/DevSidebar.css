@@ -17,7 +17,7 @@
   width: 60px;
 }
 
-.sidebar-toggle {
+.dev-sidebar-toggle {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -35,17 +35,18 @@
   z-index: 1;
 }
 
-.sidebar-toggle:hover {
-  background: rgba(255, 255, 255, 0.2);
+.dev-sidebar-toggle:hover {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.5);
 }
 
-.sidebar-content {
+.dev-sidebar-nav {
   padding: 50px 0 20px;
   overflow-y: auto;
   flex: 1;
 }
 
-.sidebar-item {
+.dev-sidebar-item {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -53,34 +54,101 @@
   color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
   font-size: 13px;
+  font-weight: 300;
   transition: all 0.2s ease;
   cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
 }
 
-.collapsed .sidebar-item {
-  padding: 10px 0;
+.collapsed .dev-sidebar-item {
+  padding: 10px;
   justify-content: center;
 }
 
-.sidebar-item:hover {
-  background: rgba(255, 149, 0, 0.1);
-  color: #ffffff;
+.dev-sidebar-item:hover {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
 }
 
-.sidebar-item svg {
+.dev-sidebar-item svg {
   flex-shrink: 0;
 }
 
-.collapsed .sidebar-item span {
+.collapsed .dev-sidebar-label {
   display: none;
 }
 
-.sidebar-divider {
+.dev-sidebar-item.active {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border-right: 2px solid #10b981;
+}
+
+.dev-sidebar-badge {
+  background: #10b981;
+  color: #000;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: auto;
+  font-weight: 500;
+}
+
+.collapsed .dev-sidebar-badge {
+  display: none;
+}
+
+.dev-sidebar-section {
+  padding: 8px 20px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 10px 0 5px 0;
+}
+
+.collapsed .dev-sidebar-section {
+  display: none;
+}
+
+.dev-sidebar-divider {
   height: 1px;
   background: rgba(255, 255, 255, 0.1);
   margin: 10px 20px;
 }
 
-.collapsed .sidebar-divider {
+.collapsed .dev-sidebar-divider {
   margin: 10px;
+}
+
+/* Header and title */
+.dev-sidebar-header {
+  position: relative;
+  padding: 15px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dev-sidebar-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #10b981;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.dev-sidebar-logo {
+  color: #10b981;
+}
+
+.collapsed .dev-sidebar-title {
+  display: none;
+}
+
+.collapsed .dev-sidebar-header {
+  padding: 15px 10px;
 }
