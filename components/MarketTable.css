@@ -1,0 +1,372 @@
+/* Market Table Styles */
+.market-table-container {
+  background: rgba(13, 13, 13, 0.95);
+  border-radius: 12px;
+  border: 1px solid #333;
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+.market-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 24px;
+  border-bottom: 1px solid #333;
+  background: #1a1a1a;
+}
+
+.market-title h2 {
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.market-title p {
+  font-size: 14px;
+  color: #888;
+}
+
+.market-controls {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.search-container {
+  position: relative;
+}
+
+.search-input {
+  background: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: #fff;
+  font-size: 14px;
+  width: 200px;
+  transition: border-color 0.2s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #10b981;
+}
+
+.search-input::placeholder {
+  color: #666;
+}
+
+.filter-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #888;
+}
+
+.filter-select {
+  background: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #10b981;
+}
+
+.market-table-wrapper {
+  overflow-x: auto;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.market-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.market-table th {
+  background: #222;
+  color: #ccc;
+  padding: 16px 12px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #333;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.market-table th.sortable {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.market-table th.sortable:hover {
+  color: #10b981;
+}
+
+.market-table td {
+  padding: 12px;
+  border-bottom: 1px solid #2a2a2a;
+  vertical-align: middle;
+}
+
+.market-row {
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.market-row:hover {
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.market-row.special-row {
+  background: linear-gradient(90deg, rgba(255, 215, 0, 0.05) 0%, rgba(16, 185, 129, 0.05) 100%);
+  border-left: 3px solid #ffd700;
+}
+
+.rank-cell {
+  color: #888;
+  font-weight: 600;
+  width: 60px;
+  position: relative;
+}
+
+.special-star {
+  position: absolute;
+  top: -2px;
+  left: -8px;
+  color: #ffd700;
+}
+
+.token-cell {
+  min-width: 200px;
+}
+
+.token-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.token-symbol {
+  font-weight: 700;
+  color: #fff;
+  font-size: 16px;
+}
+
+.token-name {
+  color: #888;
+  font-size: 12px;
+}
+
+.category-badge {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid;
+  width: fit-content;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.price-cell {
+  font-family: 'SF Mono', Monaco, 'Roboto Mono', monospace;
+  font-weight: 600;
+  color: #fff;
+  font-size: 16px;
+}
+
+.change-cell {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  font-family: 'SF Mono', Monaco, 'Roboto Mono', monospace;
+}
+
+.volume-cell,
+.marketcap-cell,
+.liquidity-cell {
+  font-family: 'SF Mono', Monaco, 'Roboto Mono', monospace;
+  color: #ccc;
+  font-weight: 500;
+}
+
+.holders-cell,
+.contracts-cell {
+  color: #888;
+  font-size: 13px;
+}
+
+.actions-cell {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.trade-button {
+  background: linear-gradient(45deg, #10b981, #06b6d4);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.trade-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.info-button {
+  background: #333;
+  color: #888;
+  border: 1px solid #444;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-button:hover {
+  background: #444;
+  color: #ccc;
+  border-color: #555;
+}
+
+.market-stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 24px;
+  background: #1a1a1a;
+  border-top: 1px solid #333;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-label {
+  display: block;
+  color: #888;
+  font-size: 12px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  display: block;
+  color: #10b981;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'SF Mono', Monaco, 'Roboto Mono', monospace;
+}
+
+/* Scrollbar styling */
+.market-table-wrapper::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.market-table-wrapper::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+.market-table-wrapper::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 3px;
+}
+
+.market-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .market-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .market-controls {
+    justify-content: space-between;
+  }
+
+  .search-input {
+    width: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .market-table {
+    font-size: 12px;
+  }
+
+  .market-table th,
+  .market-table td {
+    padding: 8px 6px;
+  }
+
+  .token-symbol {
+    font-size: 14px;
+  }
+
+  .price-cell {
+    font-size: 14px;
+  }
+
+  .actions-cell {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .trade-button {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+
+  .market-stats {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+/* Loading and animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.market-row {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.market-table-container {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Price update animation */
+@keyframes priceFlash {
+  0% { background-color: rgba(16, 185, 129, 0.2); }
+  100% { background-color: transparent; }
+}
+
+.price-updated {
+  animation: priceFlash 1s ease-out;
+}

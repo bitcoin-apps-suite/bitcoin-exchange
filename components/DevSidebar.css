@@ -3,8 +3,8 @@
   position: fixed;
   top: 72px; /* Below PoC bar (40px) and TaskBar (32px) */
   left: 0;
-  bottom: 0;
-  width: 200px;
+  bottom: 60px; /* Space for mini dock */
+  width: 220px;
   background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   transition: width 0.3s ease;
@@ -14,7 +14,7 @@
 }
 
 .dev-sidebar.collapsed {
-  width: 60px;
+  width: 70px;
 }
 
 .dev-sidebar-toggle {

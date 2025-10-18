@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import ProofOfConceptBanner from '../../components/ProofOfConceptBanner'
 import TaskBar from '../../components/TaskBar'
 import DevSidebar from '../../components/DevSidebar'
-import Dock from '../../components/Dock'
+import DockManager from '../../components/DockManager'
 import Footer from '../../components/Footer'
 import TradingInterface from '../../components/TradingInterface'
 
@@ -357,7 +357,7 @@ export default function ExchangePage() {
       </div>
 
       <Footer />
-      <Dock />
+      <DockManager />
     </div>
   )
 }

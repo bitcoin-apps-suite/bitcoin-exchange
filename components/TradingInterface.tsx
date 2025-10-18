@@ -146,7 +146,7 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
   // Bitcoin Apps Tokens
   const appTokens: Token[] = [
     {
-      id: 'bwriter',
+      id: 'bwriter-app',
       symbol: '$bWriter',
       name: 'Bitcoin Writer',
       type: 'bex',
@@ -182,7 +182,7 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
       icon: <Palette className="w-4 h-4" />
     },
     {
-      id: 'bmusic',
+      id: 'bmusic-app',
       symbol: '$bMusic',
       name: 'Bitcoin Music',
       type: 'bex',
@@ -206,7 +206,7 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
       icon: <BookOpen className="w-4 h-4" />
     },
     {
-      id: 'bjobs',
+      id: 'bjobs-app',
       symbol: '$bJobs',
       name: 'Bitcoin Jobs',
       type: 'bex',
@@ -218,7 +218,7 @@ const TradingInterface: React.FC<TradingInterfaceProps> = ({ onSelectToken }) =>
       icon: <Briefcase className="w-4 h-4" />
     },
     {
-      id: 'bemail',
+      id: 'bemail-app',
       symbol: '$bEmail',
       name: 'Bitcoin Email',
       type: 'bex',

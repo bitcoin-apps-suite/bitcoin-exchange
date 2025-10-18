@@ -3,9 +3,10 @@
 import { useState } from 'react'
 import TaskBar from '../components/TaskBar'
 import DevSidebar from '../components/DevSidebar'
-import Dock from '../components/Dock'
+import DockManager from '../components/DockManager'
 import ProofOfConceptBanner from '../components/ProofOfConceptBanner'
-import TradingInterface from '../components/TradingInterface'
+import TickerSidebar from '../components/TickerSidebar'
+import MarketTable from '../components/MarketTable'
 
 interface Token {
   id: string
@@ -52,8 +53,9 @@ export default function BitcoinExchange() {
   }
 
 
-  const handleTokenSelect = (token: Token) => {
-    setSelectedToken(token)
+  const handleTokenSelect = (token: Token | { symbol: string; name: string; price: number }) => {
+    // Convert MarketData to Token format if needed
+    setSelectedToken(token as Token)
   }
 
   return (
@@ -76,9 +78,9 @@ export default function BitcoinExchange() {
         <div className="flex flex-1 relative" style={{ marginTop: '72px' }}>
 
           {/* Main Content */}
-          <main className={`flex-1 transition-all duration-300 ${
+          <main className={`flex-1 transition-all duration-300 pr-[280px] lg:pr-[280px] md:pr-[60px] sm:pr-0 ${
             showDevSidebar 
-              ? (isDevSidebarCollapsed ? 'ml-[60px]' : 'ml-[200px]') 
+              ? (isDevSidebarCollapsed ? 'ml-[70px]' : 'ml-[220px]') 
               : 'ml-0'
           }`}>
             {/* Hero Section */}
@@ -131,75 +133,9 @@ export default function BitcoinExchange() {
               </div>
             </div>
 
-            {/* Trading Interface */}
+            {/* Market Table */}
             <div className="max-w-7xl mx-auto px-6 py-8">
-              <TradingInterface onSelectToken={handleTokenSelect} />
-            </div>
-
-            {/* Market Categories */}
-            <div className="max-w-7xl mx-auto px-6 py-8">
-              <h2 className="text-3xl font-thin mb-6 text-center" style={{ letterSpacing: '-0.02em' }}>Market Categories</h2>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                {/* $bEX Ecosystem */}
-                <div className="bg-gray-950 border border-gray-800 rounded-lg p-6">
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
-                      <span className="text-green-500 text-2xl">🔥</span>
-                    </div>
-                    <h3 className="text-xl font-light mb-2">$bEX Firehose</h3>
-                    <p className="text-gray-400 text-sm mb-4">
-                      Direct access to the Teranode data stream. Trade at the speed of settlement, not network congestion.
-                    </p>
-                    <div className="text-2xl font-mono font-light text-green-500">∞ TPS</div>
-                    <div className="text-sm text-gray-400">Unlimited Scale</div>
-                  </div>
-                </div>
-
-                {/* Bitcoin Apps */}
-                <div className="bg-gray-950 border border-gray-800 rounded-lg p-6">
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
-                      <span className="text-blue-500 text-2xl">₿</span>
-                    </div>
-                    <h3 className="text-xl font-light mb-2">Bitcoin Apps</h3>
-                    <p className="text-gray-400 text-sm mb-4">
-                      Trade tokens from the Bitcoin Apps ecosystem - Writer, Video, Art, Music, Education, Jobs and more.
-                    </p>
-                    <div className="text-2xl font-mono font-light text-blue-500">7 Tokens</div>
-                    <div className="text-sm text-gray-400">$12.4M Market Cap</div>
-                  </div>
-                </div>
-
-                {/* Computational Resources */}
-                <div className="bg-gray-950 border border-gray-800 rounded-lg p-6">
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-emerald-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
-                      <span className="text-emerald-500 text-2xl">⚡</span>
-                    </div>
-                    <h3 className="text-xl font-light mb-2">Compute Resources</h3>
-                    <p className="text-gray-400 text-sm mb-4">
-                      Access GPU, CPU, and storage resources on-demand. Pay per use with instant settlement.
-                    </p>
-                    <div className="text-2xl font-mono font-light text-emerald-500">4 Resources</div>
-                    <div className="text-sm text-gray-400">$6.8M Total Value</div>
-                  </div>
-                </div>
-
-                {/* AI Services */}
-                <div className="bg-gray-950 border border-gray-800 rounded-lg p-6">
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
-                      <span className="text-purple-500 text-2xl">🤖</span>
-                    </div>
-                    <h3 className="text-xl font-light mb-2">AI Services</h3>
-                    <p className="text-gray-400 text-sm mb-4">
-                      AI inference, training, and specialized services. Power the next generation of applications.
-                    </p>
-                    <div className="text-2xl font-mono font-light text-purple-500">3 Services</div>
-                    <div className="text-sm text-gray-400">$14.4M Capacity</div>
-                  </div>
-                </div>
-              </div>
+              <MarketTable onTokenSelect={handleTokenSelect} />
             </div>
 
             {/* Composite Services Preview */}
@@ -282,8 +218,11 @@ export default function BitcoinExchange() {
           </div>
         </footer>
         
+        {/* Ticker Sidebar */}
+        <TickerSidebar />
+        
         {/* Dock */}
-        <Dock />
+        <DockManager />
       </div>
   )
 }
