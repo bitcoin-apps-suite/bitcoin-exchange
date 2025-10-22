@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#f7931a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="12" fill="#000000"/>
+  <circle cx="32" cy="32" r="28" fill="url(#gradient)" opacity="0.1"/>
+  <text x="32" y="24" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="url(#gradient)">$b</text>
+  <text x="32" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="url(#gradient)">EX</text>
+  <rect x="16" y="44" width="32" height="2" rx="1" fill="url(#gradient)" opacity="0.6"/>
+  <rect x="20" y="48" width="24" height="1" rx="0.5" fill="url(#gradient)" opacity="0.4"/>
+</svg>
