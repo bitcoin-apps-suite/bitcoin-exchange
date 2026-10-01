@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { hasCWI, signInWithCWI } from '../components/mobile/cwi'
 import TaskBar from '../components/TaskBar'
 import DevSidebar from '../components/DevSidebar'
 import DockManager from '../components/DockManager'
@@ -46,7 +47,18 @@ export default function BitcoinExchange() {
   //   showPocBar: true
   // }
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
+    // Inside bWallet: BRC-100 sign-in via window.CWI (public identity key only)
+    if (hasCWI()) {
+      try {
+        const user = await signInWithCWI()
+        setIsAuthenticated(true)
+        setCurrentUser({ name: user.displayName ?? user.handle, address: user.publicKey ?? '' })
+        return
+      } catch (error) {
+        console.error('bWallet sign-in failed:', error)
+      }
+    }
     // Mock authentication - in real app this would connect to HandCash/wallet
     setIsAuthenticated(true)
     setCurrentUser({ name: 'Demo User', address: 'bc1q...' })
